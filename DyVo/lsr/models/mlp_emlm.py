@@ -35,6 +35,8 @@ class TransformerMLPeMLMConfig(PretrainedConfig):
         self.entity_dim = entity_dim
         self.entity_bias_term = entity_bias_term
         self.entity_weight = entity_weight
+        # DYVO-REPRO: upstream never stored entity_cls, so forward() raised AttributeError on `self.config.entity_cls`. Default False (paper behavior).
+        self.entity_cls = entity_cls
 
         super().__init__(**kwargs)
 

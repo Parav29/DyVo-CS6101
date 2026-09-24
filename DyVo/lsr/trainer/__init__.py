@@ -23,6 +23,8 @@ logger = logging.getLogger(__name__)
 LOSS_NAME = "loss.pt"
 
 USER = os.environ.get('USER')
+# DYVO-REPRO: eval representations were written to the authors' cluster path /scratch-shared/$USER/lsr-entities; allow overriding via LSR_SCRATCH_DIR (default unchanged).
+SCRATCH_DIR = os.environ.get('LSR_SCRATCH_DIR', f"/scratch-shared/{USER}/lsr-entities")
 
 
 def make_run_file(score_dict, output_file):
@@ -138,7 +140,7 @@ class HFTrainer(transformers.trainer.Trainer):
 
     def evaluation_loop_iterative_vectorized(self, query_dataloader, doc_dataloader, qrels=None, run_path=None, topk=10000, save_representation=False):
         eval_dir = Path(self.args.output_dir)/"tmp_eval"
-        emb_dir = Path(f"/scratch-shared/{USER}/lsr-entities") / eval_dir
+        emb_dir = Path(SCRATCH_DIR) / eval_dir
         queries_path = emb_dir/"queries.jsonl"
         docs_dir = emb_dir/"docs"
         try:
@@ -205,7 +207,7 @@ class HFTrainer(transformers.trainer.Trainer):
     
     def evaluation_loop_iterative(self, query_dataloader, doc_dataloader, qrels=None, run_path=None):
         eval_dir = Path(self.args.output_dir)/"tmp_eval"
-        emb_dir = Path(f"/scratch-shared/{USER}/lsr-entities")/eval_dir
+        emb_dir = Path(SCRATCH_DIR)/eval_dir
         if not eval_dir.is_dir():
             eval_dir.mkdir()
             emb_dir.mkdir(parents=True, exist_ok=True)
@@ -275,7 +277,7 @@ class HFTrainer(transformers.trainer.Trainer):
 
     def evaluation_loop(self, query_dataloader, doc_dataloader, qrels=None, run_path=None):
         eval_dir = Path(self.args.output_dir)/"tmp_eval"
-        emb_dir = Path(f"/scratch-shared/{USER}/lsr-entities")/eval_dir
+        emb_dir = Path(SCRATCH_DIR)/eval_dir
         queries_path = emb_dir/"queries.tsv"
         docs_dir = emb_dir/"docs"
         try:
