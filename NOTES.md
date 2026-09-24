@@ -60,6 +60,43 @@ From prompt §3b (to be confirmed in S5.0):
 - ⇒ **No API key or local LLM is needed to reproduce the paper.**
 - The official configs point `query_ent_path` only at REL files → LLM rows need a merged file (S5.1).
 
+### S5.0 — confirmed against `lsr42/dyvo_data` (listing via HF API; only the 16 small query-entity files downloaded, 2.9 MB, into `DyVo/dyvo_data/`)
+Repo total **94.69 GB, 48 files** (full listing with byte sizes in `logs/hf_listing.tsv`). Prompt §3b confirmed: Mixtral CODEC training queries (`codec/codec_mistral_topics.tsv`, `codec_mistral_qrels.json`), GPT-4/Mixtral/BM25/LaQue query entities for all three datasets, CODEC human entities, REL train+test entities, `knowledge_base/entity_list.json` (129 MB), MonoT5-3B scores. `dyvo_init/` also ships a tokenizer.
+
+Query-entity candidate files (stats over the **test** query ids; "OOV drop" = 1 − avg #ids / avg #names):
+
+| dataset | source | #queries in file | coverage | test ids missing | avg #names returned | avg #entity ids (test) | OOV drop | queries w/ 0 entities | entity_names encoding | max entity id |
+|---|---|---|---|---|---|---|---|---|---|---|
+| codec | rel | 5723 | train+test (5681 train) | 0 | – | 4.7 | – | 0 | – | 5151601 |
+| codec | gpt4 | 42 | test-only | 0 | 18.3 | 14.2 | 22.5% | 0 | json-string | 5103405 |
+| codec | mistral | 42 | test-only | 0 | 18.9 | 10.7 | 43.6% | 0 | list | 3290300 |
+| codec | bm25 | 42 | test-only | 0 | – | 20.0 | – | 0 | – | 5266067 |
+| codec | laque | 42 | test-only | 0 | – | 20.0 | – | 0 | – | 5272772 |
+| codec | human | 5723 | train+test (5681 train) | 0 | – | 18.0 | – | 0 | – | 5222459 |
+| robust04 | rel | 10250 | train+test (10000 train) | 0 | – | 6.0 | – | 0 | – | 5268916 |
+| robust04 | gpt4 | 250 | test-only | 0 | 18.6 | 33.8 | -81.9% | 0 | json-string | 234639 |
+| robust04 | mistral | 250 | test-only | 0 | 21.0 | 10.7 | 49.2% | 2 | json-string | 5133166 |
+| robust04 | bm25 | 250 | test-only | 0 | – | 20.0 | – | 0 | – | 5275610 |
+| robust04 | laque | 250 | test-only | 0 | – | 20.0 | – | 0 | – | 5266595 |
+| wapo | rel | 10048 | train+test (9998 train) | 0 | – | 19.1 | – | 0 | – | 5277084 |
+| wapo | gpt4 | 50 | test-only | 0 | 18.2 | 13.0 | 28.5% | 0 | list | 4984768 |
+| wapo | mistral | 50 | test-only | 0 | 19.0 | 9.1 | 52.4% | 0 | json-string | 3269849 |
+| wapo | bm25 | 50 | test-only | 0 | – | 20.0 | – | 0 | – | 5259710 |
+| wapo | laque | 50 | test-only | 0 | – | 20.0 | – | 0 | – | 5277304 |
+
+- codec: 42 test query ids (from the LLM files), all present in the REL file: True; REL file has 5723 ids (5681 training ids).
+- robust04: 250 test query ids (from the LLM files), all present in the REL file: True; REL file has 10250 ids (10000 training ids).
+- wapo: 50 test query ids (from the LLM files), all present in the REL file: True; REL file has 10048 ids (9998 training ids).
+- codec human file: same 5723 ids as REL; training ids identical to REL: 5681/5681; test ids differing from REL: 42/42 → **it is already a merged file (REL train + human test)**.
+
+Findings:
+1. **All LLM/BM25/LaQue files are test-only** (42 CODEC, 250 Robust04, 50 Core18 queries), no test query is missing; REL files cover train+test. So the LLM rows need a merged file (S5.1). Confirms §3b.
+2. **`codec/queries_test_train_entities_human.jsonl` is already a merged file**: identical to REL on all 5681 training ids, human entities on all 42 test ids. It can be used directly as `query_ent_path` (merge_candidates with `--source human` reproduces it).
+3. `entity_names` encoding is inconsistent: a JSON-encoded string in some files, a real JSON list in others (codec/mistral, wapo/gpt4). Parsers must accept both (`generate_entities_llm.parse_entity_list` does).
+4. LLM OOV drop rates: GPT-4 22.5% (CODEC), 28.5% (Core18); Mixtral 43.6% / 49.2% / 52.4% (CODEC / Robust04 / Core18). Two Robust04 Mixtral queries end with 0 entities.
+5. ⚠️ **`robust04/queries_entities_gpt4.jsonl` looks misaligned with the entity table**: every row has duplicate ids (54 ids for 23 names on query 301; 13.8 unique ids on average vs 18.6 names), all ids < 234,640 (other files go up to ~5.27M), **0%** overlap with the REL ids of the same queries (other LLM files: 7–36%), and none of the 4 queries naming "United States" contain id 0 (every other file: all do). It very likely uses a different id space (e.g. an intermediate vocabulary). Using it as-is would score the wrong entity embeddings. **Big-PC action:** rebuild ids from its `entity_names` with `python -m lsr.entity.generate_entities_llm --backend remap --input dyvo_data/robust04/queries_entities_gpt4.jsonl --entity-list dyvo_data/knowledge_base/entity_list.json --output dyvo_data/robust04/queries_entities_gpt4_remapped.jsonl` (no LLM call) and compare; `02_check_data.py` flags the file. The paper's Robust04 GPT-4 numbers (54.39 nDCG@10) can only be trusted to reproduce after this check.
+6. Entity id 0 = "United States" in the correctly aligned files (as stated in §3b).
+
 ## Deviations from paper
 - (code-level) Eq. 4 λ placement: code multiplies λ_ent **before** ReLU/log1p (`log1p(relu(λ·e·h))`); paper writes `λ·log1p(relu(e·h))`. We keep the code's version (it is what produced the paper's numbers). For λ>0 both are monotone in `e·h` and zero at the same places; magnitudes differ.
 - (code-level) Eq. 3: code applies `log1p(relu(·))` to the MLP output; paper's Eq. 3 shows the raw linear score.
