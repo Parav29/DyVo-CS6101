@@ -100,12 +100,25 @@ Findings:
 
 ## Deviations from paper
 - (code-level) Eq. 4 λ placement: code multiplies λ_ent **before** ReLU/log1p (`log1p(relu(λ·e·h))`); paper writes `λ·log1p(relu(e·h))`. We keep the code's version (it is what produced the paper's numbers). For λ>0 both are monotone in `e·h` and zero at the same places; magnitudes differ.
+- (run setting) `03_train.sh` passes `training_arguments.per_device_train_batch_size=16` (paper §4/App. A.1) because the experiment YAMLs inherit 128 from `config.yaml`; override with `BATCH_SIZE`. This deviates from the YAMLs, not from the paper.
+- (config fix) Wiki2Vec configs' encoder `entity_dim` 768 → 300 (they could not run otherwise).
+- (config addition) `trec_robust04_fold1.yaml` reconstructed as ir_datasets fold 1 (in-training eval only).
 - (code-level) Eq. 3: code applies `log1p(relu(·))` to the MLP output; paper's Eq. 3 shows the raw linear score.
 
 ## Deferred to big PC
-(filled as tasks complete)
+Everything below needs real weights, real data or a GPU (Resource Rules), so it is `BLOCKED-EXTERNAL` by design and scripted in `scripts/big_pc/` (full guide: `BIG_PC_HANDOFF.md`).
+1. `bash scripts/big_pc/00_setup_env.sh` (CUDA torch) → `bash scripts/verify.sh` must stay green.
+2. `python scripts/big_pc/01_list_and_download_data.py --embeddings laque` (18.1 GB), add more embeddings for Table 3 (~93 GB total).
+3. Obtain licensed corpora for ir_datasets (Robust04 disks 4&5, WaPo v2, CODEC). `robust04/docs.tsv` is NOT required (configs read irds).
+4. `python scripts/big_pc/02_check_data.py --experiments priority1` — also inspects `entity_list.json` format (guessed), teacher-score signs, RAM (LaQue 16.2 GB loaded to RAM), id alignment, and flags the Robust04 GPT-4 id-space problem.
+5. `bash scripts/big_pc/run_priority.sh --groups priority1` → CODEC LSR-w vs DyVo(REL); then priority2–5; `python scripts/big_pc/04_collect_results.py` → `results/results.csv`.
+6. Watch `query #entities` / `doc #entities` for collapse, and `loss_no_reg` for NaN.
+
+### Do I need LLMs or API keys? (short version)
+No. The paper's LLM outputs (Mixtral CODEC training queries; GPT-4 / Mixtral / BM25 / LaQue query entities for all 3 datasets; human CODEC entities) are all in `lsr42/dyvo_data`; no paid key and no local LLM is needed. Mixtral is open (Ollama `mixtral:8x7b`, ≈26 GB); GPT-4 is paid OpenAI API only (~340 calls for all test sets). Only regenerating candidates / other LLMs / new queries needs an LLM: `bash scripts/big_pc/05_generate_entities.sh --backend ollama|openai|vllm|anthropic` (non-paper models = deviation). The official configs use REL everywhere; `lsr/entity/merge_candidates.py` + the 28 S5.2 configs make the LLM rows reproducible. The Robust04 GPT-4 file must be re-mapped from `entity_names` (done automatically by `run_priority.sh`).
 
 ## Sanity log
+- S7: `SANITY_REPORT.md` + `BIG_PC_HANDOFF.md` written; final `bash scripts/verify.sh` → exit 0, `VERIFY PASSED (total 124s)` (73 configs, 53 dim checks, 61 tests, overfit PASS, 2 smoke runs, 8 dry-runs).
 - S6: `scripts/big_pc/{00_setup_env.sh,01_list_and_download_data.py,02_check_data.py,03_train.sh,04_collect_results.py,05_generate_entities.sh,run_priority.sh}` + `experiments.py` (46 paper experiments in 5 priority groups, all 16 paper rows mapped). All pass `bash -n`/`py_compile` and `--dry-run` inside verify.sh (offline guard on). Also exercised for real where harmless: `02_check_data.py --experiments priority1` correctly lists the missing big files, warns RAM 17 GB < 1.5×16.2 GB LaQue table, flags the Robust04 GPT-4 id space; `04_collect_results.py` → `0/46 experiments finished`, parses the smoke `test_result.json`. Bug caught in dry-run: `GROUPS` is a bash builtin (renamed `GROUP_SEL`); data check reordered to run after candidate merging.
 - S5.4: `lsr/entity/generate_entities_llm.py` — Prompt A.2 verbatim; backends mock / remap (no LLM) / openai / ollama / vllm (OpenAI-compatible HTTP) / anthropic (official SDK, default `claude-opus-5`, optional dep); keys from env only; resumable; authors' output format. `entity_list.json` shape is a **guess** (JSON list, index = id, per `bert_candidates.py`'s commented `self.entity_list[eid]`); the loader also accepts {id: name} / {name: id} and fails loudly otherwise. No real API call made.
 - S5.5: `pytest tests/test_llm_entities.py` → 24 passed, including: the parser recovers exactly the `entity_names` of all 6 authors' GPT-4/Mixtral files (both the JSON-string and real-list encodings).

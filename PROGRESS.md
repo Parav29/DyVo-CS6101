@@ -44,6 +44,6 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[!] BLOCKED-EXTERNAL` 
 - [x] S6.7 run_priority.sh
 
 ## Phase S7: Reports
-- [ ] S7.1 SANITY_REPORT.md
-- [ ] S7.2 BIG_PC_HANDOFF.md
-- [ ] S7.3 Final verify.sh green
+- [x] S7.1 SANITY_REPORT.md
+- [x] S7.2 BIG_PC_HANDOFF.md
+- [x] S7.3 Final verify.sh green
