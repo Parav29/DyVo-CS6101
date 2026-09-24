@@ -1,0 +1,18 @@
+{
+  "activation": "relu",
+  "architectures": [
+    "TransformerMLMeMLMSparseEncoder"
+  ],
+  "doc_quality": "no",
+  "entity_bias_term": false,
+  "entity_cls": false,
+  "entity_dim": 32,
+  "entity_weight": 0.05,
+  "model_type": "MLMeMLM",
+  "norm": "log1p",
+  "pool": "max",
+  "term_importance": "no",
+  "tf_base_model_name_or_dir": "/Users/parav29/Desktop/DyVo/DyVo/smoke_assets/tiny-distilbert",
+  "torch_dtype": "float32",
+  "transformers_version": "4.40.2"
+}

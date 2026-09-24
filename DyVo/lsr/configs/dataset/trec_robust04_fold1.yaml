@@ -1,0 +1,11 @@
+# DYVO-REPRO: this file is referenced by 11 upstream experiment configs (eval_dataset) but was missing from the repo,
+# so those configs failed to compose. Reconstructed as ir_datasets' Robust04 fold 1 (Huston & Croft folds), same
+# fields as trec_robust04.yaml. It is only used for periodic in-training eval (no best-model selection);
+# the reported test numbers come from test_dataset=trec_robust04 (all 250 topics).
+_target_: lsr.datasets.prediction_dataset.PredictionDataset
+docs_path: 'irds:disks45/nocr/trec-robust-2004'
+doc_field: ['title', 'body']
+query_field: ['description']
+queries_path: 'irds:disks45/nocr/trec-robust-2004/fold1'
+qrels_path:  'irds:disks45/nocr/trec-robust-2004/fold1'
+num_documents: -1

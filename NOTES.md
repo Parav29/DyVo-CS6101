@@ -39,7 +39,9 @@
 9. `BertEntityEmbedding` hardcodes 30522 while the collator uses `tokenizer.vocab_size` → tiny tokenizer must have exactly 30522 entries.
 10. `per_device_train_batch_size` is 128 in base `config.yaml`; the paper says batch 16 for fine-tuning. The experiment YAMLs **do not override it** → verify on big PC (could OOM at 512 tokens × 128 × 2 docs). Recorded as a big-PC check; `03_train.sh` passes `training_arguments.per_device_train_batch_size=16` to match the paper (see Deviations).
 11. Base `training_arguments.dataloader_num_workers: 16`, `report_to: wandb`: smoke configs override to 0 / none.
-12. Robust04 configs read `dyvo_data/robust04/docs.tsv`, not in the HF data repo (see Deferred).
+12. **Robust04 `docs.tsv` (correction to prompt §3b):** the Robust04 training dataset config actually used by the experiment configs (`dataset/robust04_inparsv2_monot53b.yaml`) reads docs from `irds:disks45/nocr/trec-robust-2004`; its `dyvo_data/robust04/docs.tsv` line is commented out. Only the unused `robust04_entity_inparsv2_monot53b.yaml` references `data/robust04/docs.tsv`. So `docs.tsv` is **not required**; what is required is the licensed TREC disks 4&5 placed for `ir_datasets`. `lsr/preprocess/export_robust04_docs.py` can still build a `docs.tsv` if you prefer local TSV (switch the commented line).
+13. **11 configs referenced a missing `dataset/trec_robust04_fold1`** (as eval_dataset): LSR-w Robust04 1e-5 and 1e-3, Table-3 Robust04 bert/blink/dpr/jds, and 5 legacy `qmlp_dmlm_emlm_robust04_*`/`qmlp_dmlm_emlm_codec_*_0.00001` configs. Added `lsr/configs/dataset/trec_robust04_fold1.yaml` → `irds:disks45/nocr/trec-robust-2004/fold1` (new file, `# DYVO-REPRO`). Used only for in-training monitoring; test = all 250 topics.
+14. Legacy configs `qmlp_dmlm_emlm_robust04_*_l1_0.0_{0.0,0.00001,0.0001,0.001}` and `qmlp_dmlm_emlm_codec_*_l1_0.0_0.00001` (despite its name it is a Robust04 config) point entity files at the authors' cluster (`/projects/0/guse0488/...`) and are **not** the paper configs; the paper's DyVo(REL, LaQue) rows are the `qmlp_dmlm_emlm_laque_*` configs.
 
 ## Data formats
 (filled in S4.1)
@@ -59,4 +61,6 @@ From prompt §3b (to be confirmed in S5.0):
 (filled as tasks complete)
 
 ## Sanity log
+- S2.1: `python smoke_assets/build_assets.py` → `vocab_size == 30522`, `built smoke assets in 1.7s, total 13.5 MB`.
+- S2.2: `bash scripts/check_configs.sh` → initially 32/43 (11 missing `trec_robust04_fold1`); after adding it → `configs composed: 43 passed, 0 failed`.
 - S0/S1: `python -c "import lsr.models, lsr.losses, lsr.datasets, lsr.trainer"` → ok after fix #1.

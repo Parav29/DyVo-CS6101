@@ -5,16 +5,16 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[!] BLOCKED-EXTERNAL` 
 ## Phase S0: Scaffolding
 - [x] S0.1 PROGRESS.md / ERRORS.md / NOTES.md, git init
 - [x] S0.2 Slash command files (.claude/commands/dyvo-*.md)
-- [ ] S0.3 Environment recorded in NOTES.md
+- [x] S0.3 Environment recorded in NOTES.md
 
 ## Phase S1: Code + environment
 - [x] S1.1 Clone thongnt99/DyVo into ./DyVo
-- [ ] S1.2 Python venv, CPU torch, deps, requirements-lock.txt
-- [ ] S1.3 Code ↔ paper map + known issues in NOTES.md
+- [x] S1.2 Python venv, CPU torch, deps, requirements-lock.txt
+- [x] S1.3 Code ↔ paper map + known issues in NOTES.md
 
 ## Phase S2: Tiny assets + unit tests (Levels 0–1)
-- [ ] S2.1 DyVo/smoke_assets/build_assets.py
-- [ ] S2.2 scripts/check_configs.sh (43 real configs compose)
+- [x] S2.1 DyVo/smoke_assets/build_assets.py
+- [x] S2.2 scripts/check_configs.sh (43 real configs compose)
 - [ ] S2.3 Unit tests in DyVo/tests/
 
 ## Phase S3: Behavioral checks (Level 2)

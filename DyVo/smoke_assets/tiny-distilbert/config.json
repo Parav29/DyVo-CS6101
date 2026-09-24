@@ -1,0 +1,22 @@
+{
+  "activation": "gelu",
+  "architectures": [
+    "DistilBertForMaskedLM"
+  ],
+  "attention_dropout": 0.1,
+  "dim": 32,
+  "dropout": 0.1,
+  "hidden_dim": 64,
+  "initializer_range": 0.02,
+  "max_position_embeddings": 128,
+  "model_type": "distilbert",
+  "n_heads": 2,
+  "n_layers": 1,
+  "pad_token_id": 0,
+  "qa_dropout": 0.1,
+  "seq_classif_dropout": 0.2,
+  "sinusoidal_pos_embds": false,
+  "torch_dtype": "float32",
+  "transformers_version": "4.40.2",
+  "vocab_size": 30522
+}
