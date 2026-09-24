@@ -32,7 +32,7 @@
 2. **`TransformerMLPeMLMConfig` never stores `entity_cls`** → `self.config.entity_cls` raises `AttributeError` in the DyVo query encoder's forward. Fixed by storing it (default False = paper behavior; `# DYVO-REPRO`).
 3. `entity_cls=True` branch: `mlp_emlm.py` uses `.unsqueeze(0)` (wrong: yields shape `1×B×H`), `mlm_emlm.py` uses `.unsqueeze(1)` (correct). Unused by default (False); left as is.
 4. 24 configs contain `sparse_aspect: Flase` (truthy string). It is only stored as an extra config attribute; the only reader is `mlp_ebin.py`, which no DyVo config uses → harmless.
-5. `loss.normalize: "std"` (39 of 42 configs using it) is not a recognized name: anything other than `"softmax"` falls into `F.normalize(labels, dim=1)` (L2 normalization of teacher scores, not a probability distribution). `KLDivLoss` then compares a log-prob with a non-normalized target. Kept for reproduction.
+5. `loss.normalize: "std"` (39 of 42 configs using it) is not a recognized name: anything other than `"softmax"` falls into `F.normalize(labels, dim=1)` (L2 normalization of teacher scores, not a probability distribution). `KLDivLoss` then compares a log-prob with a non-normalized target. Kept for reproduction. **Consequence (found in S2.3, E1):** any negative teacher score makes the KL target negative → NaN loss. The real `*_monot5_3b_scores.json` must therefore hold non-negative scores (e.g. probabilities); `02_check_data.py` verifies this on the big PC.
 6. `DynamicDataCollator.pad_one_group` truncates **queries with `d_max_length`** (512), not `q_max_length` (50). `q_max_length` is effectively unused by the DyVo collator. Kept (matches authors' runs); the LSR-w `DataCollator` does use `q_max_length` → a small asymmetry between LSR-w and DyVo.
 7. Eval writes representations to `/scratch-shared/$USER/lsr-entities/...` (authors' cluster path) — cannot be created on most machines. Patched to honor `LSR_SCRATCH_DIR` env var, default unchanged (see Deviations/edits).
 8. Eval uses `torch.autocast(device_type='cuda', dtype=float16)` — on CPU this only warns and is disabled.
@@ -61,6 +61,7 @@ From prompt §3b (to be confirmed in S5.0):
 (filled as tasks complete)
 
 ## Sanity log
+- S2.3: `python -m pytest tests -q` → `27 passed in 1.37s` (10 test files; E1 fixed).
 - S2.1: `python smoke_assets/build_assets.py` → `vocab_size == 30522`, `built smoke assets in 1.7s, total 13.5 MB`.
 - S2.2: `bash scripts/check_configs.sh` → initially 32/43 (11 missing `trec_robust04_fold1`); after adding it → `configs composed: 43 passed, 0 failed`.
 - S0/S1: `python -c "import lsr.models, lsr.losses, lsr.datasets, lsr.trainer"` → ok after fix #1.

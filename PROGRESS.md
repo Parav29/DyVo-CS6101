@@ -15,7 +15,7 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[!] BLOCKED-EXTERNAL` 
 ## Phase S2: Tiny assets + unit tests (Levels 0–1)
 - [x] S2.1 DyVo/smoke_assets/build_assets.py
 - [x] S2.2 scripts/check_configs.sh (43 real configs compose)
-- [ ] S2.3 Unit tests in DyVo/tests/
+- [x] S2.3 Unit tests in DyVo/tests/
 
 ## Phase S3: Behavioral checks (Level 2)
 - [ ] S3.1 DyVo/sanity/overfit_one_batch.py
