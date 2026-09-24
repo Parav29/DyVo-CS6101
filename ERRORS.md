@@ -20,3 +20,15 @@ Format:
 - hypothesis: wandb 0.30 (latest, pulled unpinned) removed `start_method`; the 2024 code targets an older wandb.
 - tried: pin `wandb==0.16.6` (no code change) and refresh requirements-lock.txt.
 - result: smoke_dyvo and smoke_lsrw both exit 0.
+
+## E3 | task S5.2 | attempts: 1 | status: fixed
+- symptom: all 28 generated configs failed composition: `In 'config': Could not find 'loss/triplet_margin'`.
+- hypothesis: my DYVO-REPRO header was inserted above `# @package _global_`; Hydra only honours the package directive on the first line, so the experiment was merged under `experiment.` and the base defaults (triplet_margin, splade, toy_triplets) were never overridden.
+- tried: moved `# @package _global_` back to line 1.
+- result: 73/73 compose.
+
+## E4 | task S5.2 | attempts: 1 | status: fixed
+- symptom: (static) Wiki2Vec configs set encoder `entity_dim: 768` while `entity_embs_wiki2vec.pt` is 300-d (from file size) → no projection → matmul shape error at step 1 on the big PC.
+- hypothesis: upstream config copy-paste bug.
+- tried: set 300 for the affected encoders (3 official + 3 new configs); added scripts/check_entity_dims.py to verify.sh; confirmed the checker flags the unfixed file.
+- result: 53 DyVo configs checked, 0 mismatches.

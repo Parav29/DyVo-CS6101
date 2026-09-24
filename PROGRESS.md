@@ -28,9 +28,9 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[!] BLOCKED-EXTERNAL` 
 
 ## Phase S5: LLM entity candidates
 - [x] S5.0 HF listing + small query-entity files + stats table
-- [ ] S5.1 lsr/entity/merge_candidates.py
-- [ ] S5.2 Table 2 / Table 3 experiment configs
-- [ ] S5.3 tests/test_merge_candidates.py
+- [x] S5.1 lsr/entity/merge_candidates.py
+- [x] S5.2 Table 2 / Table 3 experiment configs
+- [x] S5.3 tests/test_merge_candidates.py
 - [ ] S5.4 (optional) lsr/entity/generate_entities_llm.py
 - [ ] S5.5 (optional) tests/test_llm_entities.py
 

@@ -11,3 +11,4 @@ DyVo/dyvo_data/dyvo_init/
 logs/*.log
 results/
 .DS_Store
+DyVo/dyvo_data/.cache/

@@ -32,7 +32,7 @@ model:
       aspect_vector: False
       sparse_aspect: Flase 
       entity_weight: 0.05
-      entity_dim: 768
+      entity_dim: 300  # DYVO-REPRO: wiki2vec embeddings are 300-d (was 768 -> no projection -> shape error)
   doc_encoder:
     ent_emb_model: ${entity_embedding_model}
     config:

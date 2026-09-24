@@ -59,6 +59,9 @@ EOF
 step "L0: compose every experiment config (--cfg job)"
 bash "$ROOT/scripts/check_configs.sh"
 
+step "L0: entity_dim matches each entity table's width"
+$PY "$ROOT/scripts/check_entity_dims.py"
+
 # --- Level 1 + 2: unit tests + behavioral invariants ----------------------------------------------------------
 step "L1: pytest"
 $PY -m pytest tests -q -p no:cacheprovider
