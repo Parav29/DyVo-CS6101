@@ -1,0 +1,20 @@
+{"id": "crypto_doc0", "entities": [2, 14, 5]}
+{"id": "crypto_doc1", "entities": [5, 6, 4]}
+{"id": "crypto_doc2", "entities": [14, 5, 2]}
+{"id": "crypto_doc3", "entities": []}
+{"id": "war_doc0", "entities": [3, 21, 7]}
+{"id": "war_doc1", "entities": [7, 3, 0]}
+{"id": "war_doc2", "entities": [3, 21, 7]}
+{"id": "war_doc3", "entities": []}
+{"id": "cars_doc0", "entities": [31, 9, 8]}
+{"id": "cars_doc1", "entities": [8, 31, 9]}
+{"id": "cars_doc2", "entities": [30, 9, 31]}
+{"id": "cars_doc3", "entities": []}
+{"id": "money_doc0", "entities": [40, 42, 41]}
+{"id": "money_doc1", "entities": [10, 41, 42]}
+{"id": "money_doc2", "entities": [40, 41, 11]}
+{"id": "money_doc3", "entities": []}
+{"id": "health_doc0", "entities": [12, 50, 13]}
+{"id": "health_doc1", "entities": [50, 0, 13]}
+{"id": "health_doc2", "entities": [50, 13, 0]}
+{"id": "health_doc3", "entities": []}

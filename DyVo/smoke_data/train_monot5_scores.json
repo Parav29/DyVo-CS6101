@@ -1,0 +1,102 @@
+{
+ "mistral_0": {
+  "crypto_doc0": 0.6233,
+  "crypto_doc1": 0.6489,
+  "crypto_doc2": 0.6522,
+  "crypto_doc3": 0.7875,
+  "health_doc0": 0.1929,
+  "health_doc1": 0.2295,
+  "cars_doc0": 0.015,
+  "money_doc0": 0.2473
+ },
+ "mistral_1": {
+  "war_doc0": 0.8902,
+  "war_doc1": 0.8462,
+  "war_doc2": 0.9704,
+  "war_doc3": 0.7344,
+  "crypto_doc1": 0.1762,
+  "health_doc1": 0.0258,
+  "money_doc0": 0.1684,
+  "money_doc3": 0.2442
+ },
+ "mistral_2": {
+  "cars_doc0": 0.8732,
+  "cars_doc1": 0.699,
+  "cars_doc2": 0.7011,
+  "cars_doc3": 0.9649,
+  "war_doc2": 0.2996,
+  "health_doc0": 0.0474,
+  "war_doc0": 0.2701,
+  "war_doc1": 0.1663
+ },
+ "mistral_3": {
+  "money_doc0": 0.8502,
+  "money_doc1": 0.6132,
+  "money_doc2": 0.8955,
+  "money_doc3": 0.9189,
+  "crypto_doc1": 0.0224,
+  "cars_doc2": 0.1949,
+  "cars_doc1": 0.1375,
+  "crypto_doc2": 0.0724
+ },
+ "mistral_4": {
+  "health_doc0": 0.7301,
+  "health_doc1": 0.8555,
+  "health_doc2": 0.7858,
+  "health_doc3": 0.8168,
+  "money_doc2": 0.1635,
+  "cars_doc0": 0.2464,
+  "crypto_doc2": 0.1037,
+  "cars_doc3": 0.2441
+ },
+ "mistral_5": {
+  "crypto_doc0": 0.7374,
+  "crypto_doc1": 0.7761,
+  "crypto_doc2": 0.9251,
+  "crypto_doc3": 0.7998,
+  "war_doc2": 0.2962,
+  "war_doc1": 0.2586,
+  "cars_doc2": 0.0365,
+  "money_doc1": 0.0958
+ },
+ "mistral_6": {
+  "war_doc0": 0.6075,
+  "war_doc1": 0.9455,
+  "war_doc2": 0.6754,
+  "war_doc3": 0.7614,
+  "crypto_doc0": 0.0195,
+  "crypto_doc2": 0.0941,
+  "money_doc3": 0.1175,
+  "health_doc2": 0.0166
+ },
+ "mistral_7": {
+  "cars_doc0": 0.7592,
+  "cars_doc1": 0.7719,
+  "cars_doc2": 0.8356,
+  "cars_doc3": 0.8419,
+  "war_doc1": 0.0775,
+  "health_doc3": 0.0936,
+  "health_doc1": 0.2549,
+  "crypto_doc1": 0.1366
+ },
+ "mistral_8": {
+  "money_doc0": 0.703,
+  "money_doc1": 0.9702,
+  "money_doc2": 0.625,
+  "money_doc3": 0.6376,
+  "war_doc1": 0.0088,
+  "crypto_doc0": 0.0074,
+  "war_doc3": 0.1217,
+  "health_doc0": 0.2075
+ },
+ "mistral_9": {
+  "health_doc0": 0.8161,
+  "health_doc1": 0.9399,
+  "health_doc2": 0.7935,
+  "health_doc3": 0.6314,
+  "crypto_doc0": 0.0165,
+  "war_doc1": 0.2588,
+  "war_doc3": 0.2374,
+  "money_doc0": 0.2577
+ }
+}

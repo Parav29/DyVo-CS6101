@@ -22,9 +22,9 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[!] BLOCKED-EXTERNAL` 
 - [x] S3.2 Collapse probe (--lambda-init 1.0 --no-train-lambda)
 
 ## Phase S4: End-to-end smoke (Level 3)
-- [ ] S4.1 Synthetic data in DyVo/smoke_data/
-- [ ] S4.2 smoke_dyvo.yaml / smoke_lsrw.yaml run through lsr.train
-- [ ] S4.3 scripts/verify.sh
+- [x] S4.1 Synthetic data in DyVo/smoke_data/
+- [x] S4.2 smoke_dyvo.yaml / smoke_lsrw.yaml run through lsr.train
+- [~] S4.3 scripts/verify.sh
 
 ## Phase S5: LLM entity candidates
 - [ ] S5.0 HF listing + small query-entity files + stats table

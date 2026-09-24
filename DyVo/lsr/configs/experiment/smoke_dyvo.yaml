@@ -1,0 +1,104 @@
+# @package _global_
+# SMOKE CONFIG (sanity only, CPU, tiny random model, synthetic data). Mirrors
+# qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05.yaml
+# so the same classes / code paths run; only paths, sizes and step counts differ. Run from DyVo/:
+#   python -m lsr.train +experiment=smoke_dyvo
+defaults:
+  - /dataset@eval_dataset: codec
+  - /dataset@test_dataset: codec
+  - override /dataset@train_dataset: codec_mistral_monot53b
+  - override /loss: sparse_kl_loss
+  - override /model: qmlp_dmlm_emlm
+
+tokenizer:
+  tokenizer_name: smoke_assets/tiny-tokenizer
+
+train_dataset:
+  collection_path: smoke_data/docs.tsv
+  doc_fields: ['text']
+  queries_path: smoke_data/train_queries.tsv
+  qrels_path: smoke_data/train_qrels.json
+  ce_score_dict: smoke_data/train_monot5_scores.json
+eval_dataset:
+  docs_path: smoke_data/docs.tsv
+  queries_path: smoke_data/test_queries.tsv
+  qrels_path: smoke_data/test_qrels.json
+  doc_field: ['text']
+  num_documents: 100000
+test_dataset:
+  docs_path: smoke_data/docs.tsv
+  queries_path: smoke_data/test_queries.tsv
+  qrels_path: smoke_data/test_qrels.json
+  doc_field: ['text']
+
+entity_embedding_model:
+  _target_: lsr.models.entity_emb.BertEntityEmbedding
+  entity_emb_path: smoke_assets/entity_embs_tiny32.pt
+
+entity_candidate_retriever:
+  _target_: lsr.entity.bert_candidates.BERTCandidate
+  query_ent_path: smoke_data/queries_entities.jsonl
+  doc_ent_path: smoke_data/docs_entities.jsonl
+
+data_collator:
+  _target_: lsr.datasets.text_entity_collator.DynamicDataCollator
+  tokenizer: ${tokenizer}
+  q_max_length: ${query_max_length}
+  d_max_length: ${doc_max_length}
+  candidate_retriever: ${entity_candidate_retriever}
+  entity_dim: 32
+
+model:
+  query_encoder:
+    ent_emb_model: ${entity_embedding_model}
+    config:
+      _target_: lsr.models.mlp_emlm.TransformerMLPeMLMConfig
+      tf_base_model_name_or_dir: smoke_assets/tiny-distilbert
+      only_entity: False
+      aspect_vector: False
+      sparse_aspect: Flase
+      entity_weight: 0.05
+      entity_dim: 32
+  doc_encoder:
+    ent_emb_model: ${entity_embedding_model}
+    config:
+      _target_: lsr.models.mlm_emlm.TransformerMLMeMLMConfig
+      tf_base_model_name_or_dir: smoke_assets/tiny-distilbert
+      only_entity: False
+      aspect_vector: False
+      sparse_aspect: False
+      entity_weight: 0.05
+      entity_dim: 32
+  query_encoder_checkpoint: smoke_assets/dyvo_init/query_encoder/model.safetensors
+  doc_encoder_checkpoint: smoke_assets/dyvo_init/doc_encoder/model.safetensors
+
+query_max_length: 32
+doc_max_length: 64
+training_arguments:
+  evaluation_strategy: 'steps'
+  eval_steps: 10
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 2
+  learning_rate: 1e-4
+  warmup_steps: 0
+  warmup_ratio: 0.1
+  max_steps: 20
+  save_steps: 10
+  logging_steps: 5
+  fp16: False
+  use_cpu: True
+  report_to: none
+  dataloader_num_workers: 0
+  dataloader_drop_last: False
+trainer:
+  eval_dataset: ${eval_dataset}
+loss:
+  normalize: "std"
+  reg_ent: False
+  q_regularizer:
+    _target_: lsr.losses.regularizer.L1
+    weight: 0.0
+  d_regularizer:
+    _target_: lsr.losses.regularizer.L1
+    T: 10
+    weight: 0.00001

@@ -1,0 +1,74 @@
+# @package _global_
+# SMOKE CONFIG (sanity only). Mirrors the LSR-w baseline
+# qmlp_dmlm_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001.yaml (no entities).
+# The real LSR-w config gives the encoders no `config:` node (so they default to distilbert-base-uncased);
+# here we add one only to point at the tiny local backbone.
+defaults:
+  - /dataset@eval_dataset: codec
+  - /dataset@test_dataset: codec
+  - override /dataset@train_dataset: codec_mistral_monot53b
+  - override /loss: sparse_kl_loss
+  - override /model: qmlp_dmlm
+
+tokenizer:
+  tokenizer_name: smoke_assets/tiny-tokenizer
+
+train_dataset:
+  collection_path: smoke_data/docs.tsv
+  doc_fields: ['text']
+  queries_path: smoke_data/train_queries.tsv
+  qrels_path: smoke_data/train_qrels.json
+  ce_score_dict: smoke_data/train_monot5_scores.json
+eval_dataset:
+  docs_path: smoke_data/docs.tsv
+  queries_path: smoke_data/test_queries.tsv
+  qrels_path: smoke_data/test_qrels.json
+  doc_field: ['text']
+  num_documents: 100000
+test_dataset:
+  docs_path: smoke_data/docs.tsv
+  queries_path: smoke_data/test_queries.tsv
+  qrels_path: smoke_data/test_qrels.json
+  doc_field: ['text']
+
+model:
+  query_encoder:
+    config:
+      _target_: lsr.models.mlp.TransformerMLPConfig
+      tf_base_model_name_or_dir: smoke_assets/tiny-distilbert
+  doc_encoder:
+    config:
+      _target_: lsr.models.mlm.TransformerMLMConfig
+      tf_base_model_name_or_dir: smoke_assets/tiny-distilbert
+  query_encoder_checkpoint: smoke_assets/dyvo_init/query_encoder/model.safetensors
+  doc_encoder_checkpoint: smoke_assets/dyvo_init/doc_encoder/model.safetensors
+
+query_max_length: 32
+doc_max_length: 64
+training_arguments:
+  evaluation_strategy: 'steps'
+  eval_steps: 10
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 2
+  learning_rate: 1e-4
+  warmup_steps: 0
+  warmup_ratio: 0.1
+  max_steps: 20
+  save_steps: 10
+  logging_steps: 5
+  fp16: False
+  use_cpu: True
+  report_to: none
+  dataloader_num_workers: 0
+  dataloader_drop_last: False
+trainer:
+  eval_dataset: ${eval_dataset}
+loss:
+  normalize: "std"
+  q_regularizer:
+    _target_: lsr.losses.regularizer.L1
+    weight: 0.0
+  d_regularizer:
+    _target_: lsr.losses.regularizer.L1
+    T: 10
+    weight: 0.00001

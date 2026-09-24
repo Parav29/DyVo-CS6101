@@ -1,0 +1,37 @@
+{
+ "crypto-1": {
+  "crypto_doc0": 2,
+  "crypto_doc1": 1,
+  "crypto_doc2": 1,
+  "crypto_doc3": 1,
+  "money_doc0": 0
+ },
+ "war-1": {
+  "war_doc0": 2,
+  "war_doc1": 1,
+  "war_doc2": 1,
+  "war_doc3": 1,
+  "crypto_doc0": 0
+ },
+ "cars-1": {
+  "cars_doc0": 2,
+  "cars_doc1": 1,
+  "cars_doc2": 1,
+  "cars_doc3": 1,
+  "crypto_doc3": 0
+ },
+ "money-1": {
+  "money_doc0": 2,
+  "money_doc1": 1,
+  "money_doc2": 1,
+  "money_doc3": 1,
+  "crypto_doc2": 0
+ },
+ "health-1": {
+  "health_doc0": 2,
+  "health_doc1": 1,
+  "health_doc2": 1,
+  "health_doc3": 1,
+  "cars_doc2": 0
+ }
+}

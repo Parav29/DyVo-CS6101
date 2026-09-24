@@ -3,7 +3,7 @@
 ## Environment
 - Build machine: Apple M4 (arm64), macOS 26.6.2, 16 GB RAM, ~14 GB free disk, **no CUDA GPU** (Apple Metal only; not used).
 - Python: 3.10.20 in `.venv/` (activate with `source .venv/bin/activate`). CPU-only torch 2.2.2.
-- Key pins (full list in `requirements-lock.txt`): transformers 4.40.2, tokenizers 0.19.1, accelerate 0.30.1, hydra-core 1.3.2, omegaconf 2.3.1, datasets 2.19.1, ir-datasets 0.6.3, ir-measures 0.4.3, numpy 1.26.4, faiss-cpu 1.15.1, safetensors 0.8.0, wandb 0.30.0, pytest 9.1.1.
+- Key pins (full list in `requirements-lock.txt`; wandb pinned to 0.16.6 because 0.30 rejects `Settings(start_method=...)`, E2): transformers 4.40.2, tokenizers 0.19.1, accelerate 0.30.1, hydra-core 1.3.2, omegaconf 2.3.1, datasets 2.19.1, ir-datasets 0.6.3, ir-measures 0.4.3, numpy 1.26.4, faiss-cpu 1.15.1, safetensors 0.8.0, wandb 0.16.6, pytest 9.1.1.
 - Upstream code: `thongnt99/DyVo` @ `1b30d6c` (cloned into `DyVo/`, its `.git` removed so the outer repo tracks all edits; iter-0 commit is the pristine baseline).
 - Seeds: `training_arguments.seed=42` (HF `set_seed`), sanity scripts/tests seed `torch`, `numpy`, `random` with 0 unless stated.
 
@@ -44,7 +44,14 @@
 14. Legacy configs `qmlp_dmlm_emlm_robust04_*_l1_0.0_{0.0,0.00001,0.0001,0.001}` and `qmlp_dmlm_emlm_codec_*_l1_0.0_0.00001` (despite its name it is a Robust04 config) point entity files at the authors' cluster (`/projects/0/guse0488/...`) and are **not** the paper configs; the paper's DyVo(REL, LaQue) rows are the `qmlp_dmlm_emlm_laque_*` configs.
 
 ## Data formats
-(filled in S4.1)
+Confirmed by reading `lsr/utils/dataset_utils.py`, the dataset classes and `BERTCandidate`, and by loading `DyVo/smoke_data/` through them (`smoke_data/check_readers.py` → `READERS OK`):
+- **Collection** (local path): `doc_id<TAB>text` per line; `line.strip().split("\t")` must give exactly 2 fields (no tabs inside text). `irds:<name>` uses `ir_datasets` + `doc_fields` joined by spaces.
+- **Queries** (local path): `qid<TAB>text`; `text_fields` is ignored for local files. `irds:` uses `query_field` (CODEC `query`, TREC `description`).
+- **Qrels** (local path): JSON `{qid: {doc_id: relevance_int}}` (ids stringified).
+- **Teacher scores** `ce_score_dict` (`*.json`): `{qid: {doc_id: score}}`; only queries present here are used for training; negatives are sampled from these doc ids. Scores must be ≥ 0 because of `normalize: "std"` (E1).
+- **Entity candidates**: JSONL `{"id": <text id>, "entities": [int, ...]}` (extra fields ignored). Entity ids are **row indices** into the entity embedding table (vocab id = 30522 + row).
+- `TripletIDDistilDataset.__getitem__` → `{"query_id","query_text","doc_id":[pos,neg],"doc_text":[pos,neg],"score":[s_pos,s_neg]}`; 40% of the time the "positive" is a random teacher-scored doc (`neg_as_pos`).
+- `PredictionDataset(num_documents=-1)` → all docs; `num_documents>0` (the eval sets) → only docs appearing in qrels.
 
 ## LLMs and API keys
 From prompt §3b (to be confirmed in S5.0):
@@ -61,6 +68,8 @@ From prompt §3b (to be confirmed in S5.0):
 (filled as tasks complete)
 
 ## Sanity log
+- S4.1: `python smoke_data/build_data.py` → `docs=20 train_queries=10 test_queries=5 docs_without_entities=5 queries_without_entities=2`; `python smoke_data/check_readers.py` → `READERS OK`.
+- S4.2: `python -m lsr.train +experiment=smoke_dyvo` (20 steps, CPU, ~6 s) → exit 0, checkpoint + `model/` saved, `test_run.trec` 100 lines, `test_result.json` has nDCG@10/nDCG@20/R@1000 (SANITY ONLY, meaningless), train log shows `query #entities 1.8`, `doc #entities 3.0`. `smoke_lsrw` → exit 0, `query #entities 0.0`. (E2: pinned wandb 0.16.6.)
 - S3.1: `python sanity/overfit_one_batch.py` (Adam lr 1e-3, 100 steps, softmax teacher, threshold final ≤ 0.5×initial) → `[SANITY ONLY] loss 0.40172 -> 0.00028 (ratio 0.001)`, non-zero entity weights 15/15 → `OVERFIT PASS`. With `--normalize std` (the configs' setting): 0.58127 → 0.00017, PASS.
 - S3.2 collapse probe (300 steps each, logs in `DyVo/sanity/logs/probe_*.json`), SANITY ONLY:
   | run | loss start → end | live entity weights start → end | full collapse? |
