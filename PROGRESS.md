@@ -24,15 +24,15 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[!] BLOCKED-EXTERNAL` 
 ## Phase S4: End-to-end smoke (Level 3)
 - [x] S4.1 Synthetic data in DyVo/smoke_data/
 - [x] S4.2 smoke_dyvo.yaml / smoke_lsrw.yaml run through lsr.train
-- [~] S4.3 scripts/verify.sh
+- [x] S4.3 scripts/verify.sh
 
 ## Phase S5: LLM entity candidates
 - [x] S5.0 HF listing + small query-entity files + stats table
 - [x] S5.1 lsr/entity/merge_candidates.py
 - [x] S5.2 Table 2 / Table 3 experiment configs
 - [x] S5.3 tests/test_merge_candidates.py
-- [ ] S5.4 (optional) lsr/entity/generate_entities_llm.py
-- [ ] S5.5 (optional) tests/test_llm_entities.py
+- [x] S5.4 (optional) lsr/entity/generate_entities_llm.py
+- [x] S5.5 (optional) tests/test_llm_entities.py
 
 ## Phase S6: Big-PC scripts (write + dry-run only)
 - [ ] S6.1 00_setup_env.sh

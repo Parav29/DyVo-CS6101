@@ -106,6 +106,9 @@ Findings:
 (filled as tasks complete)
 
 ## Sanity log
+- S5.4: `lsr/entity/generate_entities_llm.py` — Prompt A.2 verbatim; backends mock / remap (no LLM) / openai / ollama / vllm (OpenAI-compatible HTTP) / anthropic (official SDK, default `claude-opus-5`, optional dep); keys from env only; resumable; authors' output format. `entity_list.json` shape is a **guess** (JSON list, index = id, per `bert_candidates.py`'s commented `self.entity_list[eid]`); the loader also accepts {id: name} / {name: id} and fails loudly otherwise. No real API call made.
+- S5.5: `pytest tests/test_llm_entities.py` → 24 passed, including: the parser recovers exactly the `entity_names` of all 6 authors' GPT-4/Mixtral files (both the JSON-string and real-list encodings).
+- S4.3: `bash scripts/verify.sh` → exit 0, `VERIFY PASSED (total 47s)`: guard blocks DNS, 130 .py compile, 73/73 configs compose, 53 entity_dim checks, 59 tests, overfit PASS, both smoke runs write run files. Sanity numbers identical across runs (deterministic).
 - S5.1: `python -m lsr.entity.merge_candidates --dataset <ds> --source <src>` for all 13 (dataset, source) pairs → line counts equal REL (5723 / 10250 / 10048), 0 fallbacks; `--source human` output is **identical** to the authors' `queries_test_train_entities_human.jsonl` (independent confirmation of the merge logic).
 - S5.2: 28 new configs (Table 2: 13, `…_entw_0.05_{gpt4,mistral,bm25,laquecand,human}.yaml`; Table 3: 15, `qmlp_dmlm_emlm_{bert,dpr,jds,wiki2vec,blink}_*_gpt4.yaml`; LaQue+GPT-4 shared with Table 2). `bash scripts/check_configs.sh` → `configs composed: 73 passed, 0 failed` (43 official + 28 + 2 smoke). E3: `# @package _global_` must stay on line 1.
 - S5.3: `pytest tests/test_merge_candidates.py` → 8 passed (synthetic + real small files).
