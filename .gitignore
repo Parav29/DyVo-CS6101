@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+DyVo/outputs/
+DyVo/smoke_outputs/
+DyVo/wandb/
+DyVo/multirun/
+DyVo/dyvo_data/knowledge_base/
+DyVo/dyvo_data/dyvo_init/
+logs/*.log
+results/
+.DS_Store
