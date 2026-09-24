@@ -35,13 +35,13 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[!] BLOCKED-EXTERNAL` 
 - [x] S5.5 (optional) tests/test_llm_entities.py
 
 ## Phase S6: Big-PC scripts (write + dry-run only)
-- [ ] S6.1 00_setup_env.sh
-- [ ] S6.2 01_list_and_download_data.py
-- [ ] S6.3 02_check_data.py (+ S6.6b robust04 docs.tsv check)
-- [ ] S6.4 03_train.sh
-- [ ] S6.5 04_collect_results.py
-- [ ] S6.6 05_generate_entities.sh (optional)
-- [ ] S6.7 run_priority.sh
+- [x] S6.1 00_setup_env.sh
+- [x] S6.2 01_list_and_download_data.py
+- [x] S6.3 02_check_data.py (+ S6.6b robust04 docs.tsv check)
+- [x] S6.4 03_train.sh
+- [x] S6.5 04_collect_results.py
+- [x] S6.6 05_generate_entities.sh (optional)
+- [x] S6.7 run_priority.sh
 
 ## Phase S7: Reports
 - [ ] S7.1 SANITY_REPORT.md
