@@ -18,8 +18,8 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[!] BLOCKED-EXTERNAL` 
 - [x] S2.3 Unit tests in DyVo/tests/
 
 ## Phase S3: Behavioral checks (Level 2)
-- [ ] S3.1 DyVo/sanity/overfit_one_batch.py
-- [ ] S3.2 Collapse probe (--lambda-init 1.0 --no-train-lambda)
+- [x] S3.1 DyVo/sanity/overfit_one_batch.py
+- [x] S3.2 Collapse probe (--lambda-init 1.0 --no-train-lambda)
 
 ## Phase S4: End-to-end smoke (Level 3)
 - [ ] S4.1 Synthetic data in DyVo/smoke_data/

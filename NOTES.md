@@ -61,6 +61,15 @@ From prompt §3b (to be confirmed in S5.0):
 (filled as tasks complete)
 
 ## Sanity log
+- S3.1: `python sanity/overfit_one_batch.py` (Adam lr 1e-3, 100 steps, softmax teacher, threshold final ≤ 0.5×initial) → `[SANITY ONLY] loss 0.40172 -> 0.00028 (ratio 0.001)`, non-zero entity weights 15/15 → `OVERFIT PASS`. With `--normalize std` (the configs' setting): 0.58127 → 0.00017, PASS.
+- S3.2 collapse probe (300 steps each, logs in `DyVo/sanity/logs/probe_*.json`), SANITY ONLY:
+  | run | loss start → end | live entity weights start → end | full collapse? |
+  |---|---|---|---|
+  | λ=1.0 frozen, softmax | 0.256 → 0.006 | 15 → 12 (dips to 13 by step 50) | no |
+  | λ=0.05 trainable, softmax | 0.402 → 0.00007 | 15 → 15 (λ drifts to ≈0.066) | no |
+  | λ=1.0 frozen, std | 0.0001 → 0.0000 | 15 → 15 | no |
+  | λ=0.05 trainable, std | 0.581 → 0.00004 | 15 → 15 (λ → ≈0.073) | no |
+  Honest reading: at toy scale (1 batch, random 32-d model, random entity table) the paper's collapse (App. A.2: all entity weights driven negative and killed by ReLU) does **not** reproduce. λ=1.0 frozen is the only setting where entity weights start dying (15→12), which matches the direction of A.2, but it is weak evidence. The real test is the first ~thousands of steps on the big PC (watch the `query #entities` / `doc #entities` logs).
 - S2.3: `python -m pytest tests -q` → `27 passed in 1.37s` (10 test files; E1 fixed).
 - S2.1: `python smoke_assets/build_assets.py` → `vocab_size == 30522`, `built smoke assets in 1.7s, total 13.5 MB`.
 - S2.2: `bash scripts/check_configs.sh` → initially 32/43 (11 missing `trec_robust04_fold1`); after adding it → `configs composed: 43 passed, 0 failed`.
