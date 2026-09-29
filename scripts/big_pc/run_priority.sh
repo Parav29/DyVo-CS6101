@@ -68,5 +68,6 @@ for g in "${GROUP_LIST[@]}"; do
     bash "$BIG/03_train.sh" "$exp" --wait $D
   done
   run "$PY" "$BIG/04_collect_results.py" $D
+  [[ "$g" == "priority1" ]] && run "$PY" "$BIG/codec_report.py"   # CODEC-only reproduction report
 done
 log "all requested groups done. Results: results/results.csv"

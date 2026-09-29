@@ -1,0 +1,8 @@
+python 3.10.21
+torch 2.2.2+cu121
+transformers 4.40.2
+tokenizers 0.19.1
+ir_datasets 0.6.3
+ir_measures 0.4.3
+numpy 1.26.4
+cuda (torch build) 12.1 | cudnn 8902

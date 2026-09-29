@@ -1,0 +1,60 @@
+diff --git a/BIG_PC_HANDOFF.md b/BIG_PC_HANDOFF.md
+index ffaa10b..5732d5f 100644
+--- a/BIG_PC_HANDOFF.md
++++ b/BIG_PC_HANDOFF.md
+@@ -13,7 +13,7 @@ On the build machine, the code was written, patched and checked end to end with
+ The experiment configs read the collections through `ir_datasets` (`irds:`):
+ - **Robust04**: `disks45/nocr/trec-robust-2004`. TREC Disks 4 & 5 (minus CR) from NIST (https://trec.nist.gov/data/cd45/); place them as described at https://ir-datasets.com/disks45.html.
+ - **TREC Core 2018**: `wapo/v2/trec-core-2018`. Washington Post v2 from NIST (https://trec.nist.gov/data/wapost/); see https://ir-datasets.com/wapo.html.
+-- **CODEC**: `codec`. See https://ir-datasets.com/codec.html.
++- **CODEC**: `codec`. Public (despite ir_datasets saying "on request"): `curl -L https://huggingface.co/datasets/macavaney/codec/resolve/main/documents.jsonl.gz | gunzip > ~/.ir_datasets/codec/v1/comets_documents.jsonl` (729,824 docs; see ERRORS E6).
+ - **`dyvo_data/robust04/docs.tsv`**: **not needed.** This corrects the original plan: the Robust04 training config reads `irds:disks45/nocr/trec-robust-2004`, and its `docs.tsv` line is commented out. Build it only if you switch that config to the local TSV: run `lsr/preprocess/export_robust04_docs.py` on the licensed corpus. The format is `doc_id<TAB>title body`, one line per document, with no tabs or newlines inside the text.
+ 
+ ## 3. Exact command sequence
+diff --git a/ERRORS.md b/ERRORS.md
+index 2f4eae7..9652057 100644
+--- a/ERRORS.md
++++ b/ERRORS.md
+@@ -32,3 +32,15 @@ Format:
+ - hypothesis: upstream config copy-paste bug.
+ - tried: set 300 for the affected encoders (3 official + 3 new configs); added scripts/check_entity_dims.py to verify.sh; confirmed the checker flags the unfixed file.
+ - result: 53 DyVo configs checked, 0 mismatches.
++
++## E5 | task big-PC setup | attempts: 2 | status: fixed
++- symptom: `00_setup_env.sh` → pip `ResolutionImpossible`: lock pins `protobuf==4.25.9` but also `googleapis-common-protos==1.75.3` (needs protobuf>=6.33.5).
++- hypothesis: the lock is a full `pip freeze` of the build machine, which pip never re-checked; wandb 0.16.6 needs protobuf 4.
++- tried: install the lock with `--no-deps` (exact replica of the build env). Also needed Python 3.10 (machine has only 3.13): `uv python install 3.10`, passed via `--python`.
++- result: env OK (torch 2.2.2+cu121, CUDA visible); `pip check` lists only the two known protobuf mismatches; `verify.sh` PASSED on the big PC (129 s).
++
++## E6 | task big-PC data | attempts: 1 | status: fixed
++- symptom: ir_datasets says the CODEC corpus is "available on request".
++- hypothesis: outdated; the CODEC README now links a public copy.
++- tried: downloaded `huggingface.co/datasets/macavaney/codec/documents.jsonl.gz` (sha256 c567900f…ab90), gunzipped to `~/.ir_datasets/codec/v1/comets_documents.jsonl`.
++- result: 729,824 docs, ir_datasets loads it, 5917/5917 qrel docs found; `02_check_data.py --experiments priority1` → 0 errors.
+diff --git a/scripts/big_pc/00_setup_env.sh b/scripts/big_pc/00_setup_env.sh
+index c36cb5c..b0cc786 100644
+--- a/scripts/big_pc/00_setup_env.sh
++++ b/scripts/big_pc/00_setup_env.sh
+@@ -38,7 +38,8 @@ if [[ $DRY -eq 1 ]]; then
+ else
+   mkdir -p "$ROOT/logs"; grep -vE '^(torch|torchvision)==' "$LOCK" > "$FILTERED"
+ fi
+-run $PIP install -r "$FILTERED"
++# --no-deps: the lock is a full freeze of the build machine; pip's resolver rejects its protobuf pin (googleapis-common-protos wants >=6).
++run $PIP install --no-deps -r "$FILTERED"
+ run $PIP install "huggingface_hub[cli]" psutil
+ # Optional, only for 05_generate_entities.sh --backend anthropic:  $PIP install anthropic
+ 
+diff --git a/scripts/big_pc/02_check_data.py b/scripts/big_pc/02_check_data.py
+index 63e7c42..c96e9cc 100644
+--- a/scripts/big_pc/02_check_data.py
++++ b/scripts/big_pc/02_check_data.py
+@@ -135,7 +135,7 @@ def check_irds(name, rep):
+     base = name.split("/")[0]
+     home = Path(os.environ.get("IR_DATASETS_HOME", Path.home() / ".ir_datasets"))
+     root = home / base
+-    if root.exists() and any(root.iterdir()):
++    if root.exists() and any(p.is_file() for p in root.rglob("*")):  # empty subdirs (e.g. codec/v1) do not count
+         rep.ok(f"ir_datasets:{name} has local data under {root}")
+     else:
+         key = next((k for k in LICENSED if name.startswith(k.split("/")[0])), None)

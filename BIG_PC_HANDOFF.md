@@ -13,7 +13,7 @@ On the build machine, the code was written, patched and checked end to end with 
 The experiment configs read the collections through `ir_datasets` (`irds:`):
 - **Robust04**: `disks45/nocr/trec-robust-2004`. TREC Disks 4 & 5 (minus CR) from NIST (https://trec.nist.gov/data/cd45/); place them as described at https://ir-datasets.com/disks45.html.
 - **TREC Core 2018**: `wapo/v2/trec-core-2018`. Washington Post v2 from NIST (https://trec.nist.gov/data/wapost/); see https://ir-datasets.com/wapo.html.
-- **CODEC**: `codec`. See https://ir-datasets.com/codec.html.
+- **CODEC**: `codec`. Public (despite ir_datasets saying "on request"): `curl -L https://huggingface.co/datasets/macavaney/codec/resolve/main/documents.jsonl.gz | gunzip > ~/.ir_datasets/codec/v1/comets_documents.jsonl` (729,824 docs; see ERRORS E6).
 - **`dyvo_data/robust04/docs.tsv`**: **not needed.** This corrects the original plan: the Robust04 training config reads `irds:disks45/nocr/trec-robust-2004`, and its `docs.tsv` line is commented out. Build it only if you switch that config to the local TSV: run `lsr/preprocess/export_robust04_docs.py` on the licensed corpus. The format is `doc_id<TAB>title body`, one line per document, with no tabs or newlines inside the text.
 
 ## 3. Exact command sequence

@@ -135,7 +135,7 @@ def check_irds(name, rep):
     base = name.split("/")[0]
     home = Path(os.environ.get("IR_DATASETS_HOME", Path.home() / ".ir_datasets"))
     root = home / base
-    if root.exists() and any(root.iterdir()):
+    if root.exists() and any(p.is_file() for p in root.rglob("*")):  # empty subdirs (e.g. codec/v1) do not count
         rep.ok(f"ir_datasets:{name} has local data under {root}")
     else:
         key = next((k for k in LICENSED if name.startswith(k.split("/")[0])), None)

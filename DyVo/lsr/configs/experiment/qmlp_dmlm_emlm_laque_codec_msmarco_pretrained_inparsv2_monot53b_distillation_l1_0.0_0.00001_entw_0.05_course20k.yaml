@@ -1,0 +1,18 @@
+# @package _global_
+# DYVO-REPRO course-project budget variant of the official config qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05.
+# Only these settings differ (see repro_codec/REPORT.md, "Differences from the paper"):
+#  - batch 4 x 4 gradient accumulation = effective batch 16 (paper): fits in ~6 GB instead of ~15 GB
+#  - 20k optimizer steps instead of 100k (warmup_ratio 0.1 and the linear decay scale with it)
+#  - L1 warm-up T: the regularizer steps once per micro-batch, so 50k/100k of training -> 10k optimizer steps x 4 = 40000
+#  - no mid-training evaluation (it only logs; no best-checkpoint selection)
+defaults:
+  - /experiment/qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05
+  - _self_
+training_arguments:
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 4
+  max_steps: 20000
+  evaluation_strategy: 'no'
+loss:
+  d_regularizer:
+    T: 40000

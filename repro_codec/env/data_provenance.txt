@@ -1,0 +1,11 @@
+CODEC corpus: https://huggingface.co/datasets/macavaney/codec documents.jsonl.gz sha256 c567900f432622637677060b5d24808bc0e4b6b38806b045d8815a0bedadab90
+  -> ~/.ir_datasets/codec/v1/comets_documents.jsonl (729824 docs)
+authors' data: huggingface.co/datasets/lsr42/dyvo_data (files used, sha256):
+6499d38412e7394a068ad36b9061feb94d6bc82c0c40c492e7df8edf45595482  dyvo_data/codec/codec_mistral_topics.tsv
+254de1d1a6c19eedca5b14c9600bae44d76c72b4e1315ecdbdd0a0c36f47f379  dyvo_data/codec/codec_mistral_qrels.json
+73b02c41d0f5ff78dd3cd7a66f044080d8674be23b1c8d1504cc3daaa06405a2  dyvo_data/codec/codec_monot5_3b_scores.json
+8d40aef2d852fc05be7f71fdb6249d3b64cb2090cf6aba4517f3223b1cca1c57  dyvo_data/codec/queries_test_train_entities_rel.jsonl
+6c543da6f47369fed4b82db0d9c0afa74c80e0bab8f83135e20618e88b22bb4d  dyvo_data/codec/docs_entities.jsonl
+5cd5315942a08c57d35a42a7639ff9063d7b4a08e7639be3ea81506dbd0417e0  dyvo_data/dyvo_init/query_encoder/model.safetensors
+540fe1813375f7a0149e66e416481ab14141fca097bfe754546a9d98a656ebba  dyvo_data/dyvo_init/doc_encoder/model.safetensors
+-rw-r--r-- 1 24b4515 btech.ieor 16212727042 Sep 28 18:01 dyvo_data/knowledge_base/entity_embs_laque.pt

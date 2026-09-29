@@ -11,6 +11,7 @@ fi
 
 # --- Resource rules: offline + CPU, enforced ---------------------------------------------------------------
 export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_DATASETS_OFFLINE=1 WANDB_MODE=disabled CUDA_VISIBLE_DEVICES=""
+export WANDB__SERVICE_WAIT=300   # wandb service start timeout (default 30 s is too short under heavy load)
 export DYVO_BLOCK_NETWORK=1                       # scripts/offline_guard/sitecustomize.py: outbound sockets raise
 export PYTHONPATH="$ROOT/scripts/offline_guard${PYTHONPATH:+:$PYTHONPATH}"
 export LSR_SCRATCH_DIR="$ROOT/DyVo/smoke_outputs/scratch"

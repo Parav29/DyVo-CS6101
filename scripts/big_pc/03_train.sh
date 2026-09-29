@@ -30,6 +30,8 @@ CFG="$ROOT/DyVo/lsr/configs/experiment/$NAME.yaml"
 LOGDIR="$ROOT/logs"; LOG="$LOGDIR/$NAME.log"; PIDF="$LOGDIR/$NAME.pid"
 export LSR_SCRATCH_DIR="${LSR_SCRATCH_DIR:-$ROOT/scratch}"
 export WANDB_MODE="${WANDB_MODE:-offline}"
+# the wandb service times out after 30 s on a loaded shared machine (seen in verify.sh); allow 5 min
+export WANDB__SERVICE_WAIT="${WANDB__SERVICE_WAIT:-300}"
 BATCH_SIZE="${BATCH_SIZE:-16}"
 PY="${PYTHON:-python}"
 log() { echo "[03_train $(date +%H:%M:%S)] $*"; }
@@ -59,7 +61,10 @@ fi
 mkdir -p "$LOGDIR" "$LSR_SCRATCH_DIR"
 cd "$ROOT/DyVo"
 log "starting $NAME (batch $BATCH_SIZE, fp16) -> $LOG"
-nohup "${CMD[@]}" > "$LOG" 2>&1 &
+TIMING="$LOGDIR/$NAME.timing"
+{ echo "start $(date -Is)"; echo "gpu ${CUDA_VISIBLE_DEVICES:-all}"; echo "cmd cd $ROOT/DyVo && ${CMD[*]}"; } > "$TIMING"
+# the subshell appends the end time when training exits, even if nobody is waiting on it
+( set +e; "${CMD[@]}" > "$LOG" 2>&1; rc=$?; echo "end $(date -Is) exit $rc" >> "$TIMING"; exit $rc ) &
 PID=$!
 echo "$PID" > "$PIDF"
 log "pid $PID. Follow with: tail -f $LOG"

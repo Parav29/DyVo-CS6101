@@ -38,7 +38,8 @@ if [[ $DRY -eq 1 ]]; then
 else
   mkdir -p "$ROOT/logs"; grep -vE '^(torch|torchvision)==' "$LOCK" > "$FILTERED"
 fi
-run $PIP install -r "$FILTERED"
+# --no-deps: the lock is a full freeze of the build machine; pip's resolver rejects its protobuf pin (googleapis-common-protos wants >=6).
+run $PIP install --no-deps -r "$FILTERED"
 run $PIP install "huggingface_hub[cli]" psutil
 # Optional, only for 05_generate_entities.sh --backend anthropic:  $PIP install anthropic
 

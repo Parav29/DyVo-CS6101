@@ -1,0 +1,21 @@
+host: passpoli
+date: 2026-09-28T19:38:50+05:30
+Linux passpoli 6.12.101+deb13-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.12.101-1 (2026-08-05) x86_64 GNU/Linux
+
+CPU(s):                                  64
+Model name:                              AMD Ryzen Threadripper PRO 5975WX 32-Cores
+Thread(s) per core:                      2
+Socket(s):                               1
+CPU(s) scaling MHz:                      38%
+
+               total        used        free      shared  buff/cache   available
+Mem:             125          24           1           0         101         101
+Swap:             59          16          43
+
+index, name, memory.total [MiB], driver_version
+0, NVIDIA RTX A5000, 24564 MiB, 550.163.01
+1, NVIDIA RTX A5000, 24564 MiB, 550.163.01
+
+GPU load at snapshot time (shared machine):
+0, 17356 MiB, 99 %
+1, 7805 MiB, 98 %

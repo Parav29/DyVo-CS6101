@@ -1,0 +1,17 @@
+# @package _global_
+# DYVO-REPRO inference-only: our trained DyVo (course20k) with REL query entities at test time (= the course20k test that crashed on a stale scratch dir)
+# outputs/<train run>/final is a symlink to that run's dated output dir (made by run_codec_phase2.sh).
+# One optimizer step with learning_rate 0 leaves every weight (incl. lambda_ent) unchanged; then the official predict().
+defaults:
+  - /experiment/qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05
+  - _self_
+model:
+  query_encoder_checkpoint: outputs/qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05_course20k/final/model/query_encoder/model.safetensors
+  doc_encoder_checkpoint: outputs/qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05_course20k/final/model/doc_encoder/model.safetensors
+training_arguments:
+  per_device_train_batch_size: 4
+  max_steps: 1
+  learning_rate: 0.0
+  warmup_ratio: 0.0
+  evaluation_strategy: 'no'
+  save_strategy: 'no'

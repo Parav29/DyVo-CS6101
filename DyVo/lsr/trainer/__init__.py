@@ -143,16 +143,16 @@ class HFTrainer(transformers.trainer.Trainer):
         emb_dir = Path(SCRATCH_DIR) / eval_dir
         queries_path = emb_dir/"queries.jsonl"
         docs_dir = emb_dir/"docs"
-        try:
+        # DYVO-REPRO: clean up independently, so a missing queries file no longer skips removing a stale docs dir
+        # (left by an aborted run in the same dated output dir -> FileExistsError at test time)
+        if queries_path.exists():
             os.remove(queries_path)
-            shutil.rmtree(docs_dir, ignore_errors=True)
-        except:
-            pass
+        shutil.rmtree(docs_dir, ignore_errors=True)
         if not eval_dir.is_dir():
             eval_dir.mkdir(exist_ok=True, parents=True)
         if not emb_dir.is_dir():
             emb_dir.mkdir(exist_ok=True, parents=True)
-        docs_dir.mkdir()
+        docs_dir.mkdir(parents=True, exist_ok=True)
         if not run_path:
             run_path = eval_dir/"eval_run.trec"
         self.model.eval()

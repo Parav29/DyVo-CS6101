@@ -1,0 +1,24 @@
+upstream: https://github.com/thongnt99/DyVo
+commit 158b65bcc87b2a471141296ba2170772d7a0c1ac (Thu Sep 24 15:12:10 2026 +0530)
+local modifications (git status --short):
+ M ../BIG_PC_HANDOFF.md
+ M ../ERRORS.md
+ M ../scripts/big_pc/00_setup_env.sh
+ M ../scripts/big_pc/02_check_data.py
+?? ../.venv-gpu/
+?? dyvo_data/codec/codec_mistral_qrels.json
+?? dyvo_data/codec/codec_mistral_topics.tsv
+?? dyvo_data/codec/codec_monot5_3b_scores.json
+?? dyvo_data/codec/docs_entities.jsonl
+?? dyvo_data/robust04/docs_entities.jsonl
+?? dyvo_data/robust04/robust04_inparsv2_qrels.json
+?? dyvo_data/robust04/robust04_inparsv2_topics.tsv
+?? dyvo_data/robust04/robust04_monot5_3b_scores.json
+?? dyvo_data/wapo/docs_entities.jsonl
+?? dyvo_data/wapo/wapo_inparsev2_qrels.json
+?? dyvo_data/wapo/wapo_inparsev2_topics.tsv
+?? dyvo_data/wapo/wapo_monot5_3b_scores.json
+?? ../logs/requirements-gpu.txt
+?? ../repro_codec/
+?? ../scripts/big_pc/codec_snapshot.sh
+?? ../scripts/big_pc/wait_and_train.sh

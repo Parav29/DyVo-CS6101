@@ -1,0 +1,129 @@
+query_max_length: 50
+doc_max_length: 512
+tokenizer:
+  _target_: lsr.tokenizer.HFTokenizer
+  tokenizer_name: distilbert-base-uncased
+data_collator:
+  _target_: lsr.datasets.text_entity_collator.DynamicDataCollator
+  tokenizer: ${tokenizer}
+  q_max_length: ${query_max_length}
+  d_max_length: ${doc_max_length}
+  candidate_retriever: ${entity_candidate_retriever}
+  entity_dim: 768
+training_arguments:
+  _target_: transformers.TrainingArguments
+  overwrite_output_dir: true
+  remove_unused_columns: false
+  do_train: true
+  evaluation_strategy: 'no'
+  log_level: info
+  logging_steps: 500
+  per_device_train_batch_size: 4
+  max_steps: 1
+  save_total_limit: 2
+  save_strategy: 'no'
+  save_steps: 5000
+  warmup_steps: 0
+  fp16: true
+  report_to: wandb
+  dataloader_num_workers: 16
+  dataloader_drop_last: false
+  ignore_data_skip: false
+  ddp_find_unused_parameters: false
+  seed: 42
+  eval_steps: 5000
+  per_device_eval_batch_size: 64
+  learning_rate: 0.0
+  warmup_ratio: 0.0
+trainer:
+  _target_: lsr.trainer.HFTrainer
+  model: ${model}
+  args: ${training_arguments}
+  data_collator: ${data_collator}
+  train_dataset: ${train_dataset}
+  loss: ${loss}
+  eval_dataset: ${eval_dataset}
+resume_from_checkpoint: false
+model:
+  _target_: lsr.models.DualSparseEncoder
+  query_encoder:
+    _target_: lsr.models.mlp_emlm.TransformerMLPeMLMSparseEncoder
+    ent_emb_model: ${entity_embedding_model}
+    config:
+      _target_: lsr.models.mlp_emlm.TransformerMLPeMLMConfig
+      only_entity: false
+      aspect_vector: false
+      sparse_aspect: Flase
+      entity_weight: 0.05
+      entity_dim: 768
+  doc_encoder:
+    _target_: lsr.models.mlm_emlm.TransformerMLMeMLMSparseEncoder
+    ent_emb_model: ${entity_embedding_model}
+    config:
+      _target_: lsr.models.mlm_emlm.TransformerMLMeMLMConfig
+      only_entity: false
+      aspect_vector: false
+      sparse_aspect: false
+      entity_weight: 0.05
+      entity_dim: 768
+  query_encoder_checkpoint: outputs/qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05_course20k/final/model/query_encoder/model.safetensors
+  doc_encoder_checkpoint: outputs/qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05_course20k/final/model/doc_encoder/model.safetensors
+train_dataset:
+  _target_: lsr.datasets.TripletIDDistilDataset
+  collection_path: irds:codec
+  doc_fields:
+  - title
+  - text
+  queries_path: dyvo_data/codec/codec_mistral_topics.tsv
+  qrels_path: dyvo_data/codec/codec_mistral_qrels.json
+  ce_score_dict: dyvo_data/codec/codec_monot5_3b_scores.json
+loss:
+  _target_: lsr.losses.EntityDistilKLLoss
+  q_regularizer:
+    _target_: lsr.losses.regularizer.L1
+    weight: 0.0
+    T: 50000
+  d_regularizer:
+    _target_: lsr.losses.regularizer.L1
+    weight: 1.0e-05
+    T: 50000
+  normalize: std
+  reg_ent: false
+wandb:
+  setup:
+    project: lsr-entities
+    entity: null
+    mode: online
+  watch:
+    log: all
+    log_freq: 100
+  resume: false
+eval_dataset:
+  _target_: lsr.datasets.prediction_dataset.PredictionDataset
+  docs_path: irds:codec
+  doc_field:
+  - title
+  - text
+  query_field:
+  - query
+  queries_path: irds:codec
+  qrels_path: irds:codec
+  num_documents: 100000
+test_dataset:
+  _target_: lsr.datasets.prediction_dataset.PredictionDataset
+  docs_path: irds:codec
+  doc_field:
+  - title
+  - text
+  query_field:
+  - query
+  queries_path: irds:codec
+  qrels_path: irds:codec
+  num_documents: -1
+entity_embedding_model:
+  _target_: lsr.models.entity_emb.BertEntityEmbedding
+  entity_emb_path: dyvo_data/knowledge_base/entity_embs_laque.pt
+entity_candidate_retriever:
+  _target_: lsr.entity.bert_candidates.BERTCandidate
+  query_ent_path: dyvo_data/codec/queries_test_train_entities_mistral.jsonl
+  doc_ent_path: dyvo_data/codec/docs_entities.jsonl
