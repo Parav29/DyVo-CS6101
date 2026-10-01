@@ -7,11 +7,18 @@ from faiss import read_index
 import numpy as np
 
 
+_EMB_CACHE = {}
+
+
 class BertEntityEmbedding(nn.Module):
     def __init__(self, *args, entity_emb_path="data/entity_bert_emb_agg.pt", ** kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.entity_emb = torch.load(
-            entity_emb_path, map_location="cpu").to("cpu")
+        # DYVO-REPRO: memory-map the 16 GB table and share it between the query/doc encoders
+        # (was: two private copies per process + copy-on-write in dataloader workers -> host OOM kills)
+        if entity_emb_path not in _EMB_CACHE:
+            _EMB_CACHE[entity_emb_path] = torch.load(
+                entity_emb_path, map_location="cpu", mmap=True)
+        self.entity_emb = _EMB_CACHE[entity_emb_path]
 
     def forward(self, entity_ids):
         with torch.no_grad():

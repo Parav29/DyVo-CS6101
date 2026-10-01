@@ -81,8 +81,8 @@ Only one Claude session supervises (other sessions were killed 2026-09-29 14:15)
 2. `loss_no_reg` finite (NaN = negative teacher scores).
 3. Result within ~1–2 nDCG@10 points of the paper (10+ = miswired).
 
-## 9. Expected timeline
-DyVo 20k re-test and candidate evals: tonight to tomorrow morning. LSR-w 100k: ~1 Oct evening. DyVo 100k: ~2–3 Oct, plus test and evals. Estimates only; shared GPUs make speeds vary.
+## 9. Expected timeline (revised 2026-09-29 17:30 IST)
+Test-time scoring of the 729k-doc corpus is much slower on the shared GPUs than the 48 min seen in phase 1: at eval batch 16 it runs ~1.3 s/batch, ~16 h per evaluation (batch 64 ran out of memory next to other jobs; batch 8 was ~22 h). The repair lane runs its four jobs one after another (RAM allows one DyVo process at a time), so: DyVo 20k REL result ~1 Oct 09:30, GPT-4 ~2 Oct, Mixtral ~2-3 Oct, DyVo init after that. LSR-w 100k training ends ~1 Oct evening, DyVo 100k training ~2-3 Oct, then their tests (also long). Estimates only; speed depends on other users' jobs.
 
 ## 10. Where to read more
 `BIG_PC_HANDOFF.md` (full run guide), `NOTES.md` (deviations), `ERRORS.md`, `SANITY_REPORT.md`, `TRACEABILITY.md` (paper equations to code), `PROGRESS.md`, `repro_codec/REPORT.md`, `DYVO_IMPLEMENTATION_PROMPT.md`.
