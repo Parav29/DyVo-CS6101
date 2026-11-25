@@ -166,6 +166,8 @@ def main():
            "| 6 | Six upstream bugs fixed (missing loss imports, missing `entity_cls`, missing robust04 fold config, Wiki2Vec `entity_dim`, hard-coded scratch path, wandb API) | Needed to run at all; no change to the model math. Only the first two affect these runs |",
            "| 7 | CODEC corpus from the public Hugging Face copy linked by the CODEC authors (ir_datasets says \"on request\") | Same 729,824 documents; all 5,917 judged docs present |",
            "| 8 | Software: torch 2.2.2, transformers 4.40.2, wandb 0.16.6 offline (paper does not state versions) | Unknown, expected to be small |",
+           "| 10 | Test-time scoring via `scripts/big_pc/fast_eval.py` (results in `outputs/<exp>/fasteval/`) instead of HFTrainer.predict: same model, collator, fp16 encoding and exact-match dot-product scoring (checked equal to the official formula within 1e-6 on real encodings), but the corpus is encoded once and scored with one matmul for all query-candidate sources; ~1 h instead of ~15 h per DyVo run | None on scores (doc batch 16 instead of 64, as in the earlier repair-lane runs) |",
+           "| 11 | 100k runs were killed by host OOM (another user's jobs + two private 16 GB entity tables per process) and resumed from their last checkpoints (DyVo 20k, LSR-w 60k) with the optimizer/scheduler/regularizer state; entity table now memory-mapped and shared (`entity_emb.py`), dataloader skip disabled on resume | Data order after resume differs from an uninterrupted run; effective batch stays 16 |",
            "| 9 | Mid-training evals every 5k steps on a 100k-doc subset (official config); the test uses the full corpus | As in the official code |",
            ""]
     if "--dry-run" in sys.argv:

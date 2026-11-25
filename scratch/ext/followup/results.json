@@ -1,0 +1,943 @@
+{
+ "systems": {
+  "DyVo baseline (REL, linked)": {
+   "nDCG@10": {
+    "mean": 0.5366504971437182,
+    "sd": 0.0
+   },
+   "nDCG@20": {
+    "mean": 0.5075467875487535,
+    "sd": 0.0
+   },
+   "R@1000": {
+    "mean": 0.7081581152294253,
+    "sd": 0.0
+   },
+   "chosen": {
+    "REL|0|0.0": 100
+   }
+  },
+  "E1 alone (E1-occ v2, CV-K)": {
+   "nDCG@10": {
+    "mean": 0.5475420809839913,
+    "sd": 0.0035014358970223845
+   },
+   "nDCG@20": {
+    "mean": 0.5149363848255689,
+    "sd": 0.005564926786514868
+   },
+   "R@1000": {
+    "mean": 0.7320919837422535,
+    "sd": 0.006229226000690377
+   },
+   "chosen": {
+    "none|3|0.0": 49,
+    "none|5|0.0": 22,
+    "none|10|0.0": 29
+   }
+  },
+  "E2 alone (REL, grounded v2 c=5)": {
+   "nDCG@10": {
+    "mean": 0.5414292355853157,
+    "sd": 0.0
+   },
+   "nDCG@20": {
+    "mean": 0.511941525987734,
+    "sd": 1.1102230246251565e-16
+   },
+   "R@1000": {
+    "mean": 0.709928115805982,
+    "sd": 1.1102230246251565e-16
+   },
+   "chosen": {
+    "REL|0|1.0": 100
+   }
+  },
+  "F1 REL + E1 (CV-K)": {
+   "nDCG@10": {
+    "mean": 0.5458111526813652,
+    "sd": 0.003987373017987123
+   },
+   "nDCG@20": {
+    "mean": 0.5158610465749642,
+    "sd": 0.004881186878610223
+   },
+   "R@1000": {
+    "mean": 0.7339312636369373,
+    "sd": 0.006566665320092161
+   },
+   "chosen": {
+    "REL|1|0.0": 1,
+    "REL|3|0.0": 41,
+    "REL|5|0.0": 31,
+    "REL|10|0.0": 27
+   }
+  },
+  "F2 REL, interpolated E2 (CV-alpha)": {
+   "nDCG@10": {
+    "mean": 0.5407394524993423,
+    "sd": 0.0015307078774569808
+   },
+   "nDCG@20": {
+    "mean": 0.5112973844113801,
+    "sd": 0.0012134312651396262
+   },
+   "R@1000": {
+    "mean": 0.7098057323159627,
+    "sd": 0.0006115392357934238
+   },
+   "chosen": {
+    "REL|0|0.25": 3,
+    "REL|0|0.5": 54,
+    "REL|0|0.75": 21,
+    "REL|0|1.0": 22
+   }
+  },
+  "F1+F2 REL (CV-K x alpha)": {
+   "nDCG@10": {
+    "mean": 0.5502847911155019,
+    "sd": 0.006081903374344744
+   },
+   "nDCG@20": {
+    "mean": 0.5147304516722904,
+    "sd": 0.004102032012831484
+   },
+   "R@1000": {
+    "mean": 0.7331504033549855,
+    "sd": 0.006159247555934151
+   },
+   "chosen": {
+    "REL|1|0.5": 1,
+    "REL|3|0.0": 1,
+    "REL|3|0.25": 5,
+    "REL|3|0.5": 30,
+    "REL|3|1.0": 10,
+    "REL|5|0.0": 2,
+    "REL|5|0.25": 1,
+    "REL|5|0.5": 1,
+    "REL|5|0.75": 24,
+    "REL|5|1.0": 12,
+    "REL|10|0.0": 7,
+    "REL|10|0.25": 3,
+    "REL|10|0.5": 2,
+    "REL|10|0.75": 1
+   }
+  },
+  "GPT-4 (linked)": {
+   "nDCG@10": {
+    "mean": 0.5687609170989193,
+    "sd": 0.0
+   },
+   "nDCG@20": {
+    "mean": 0.5360600163007676,
+    "sd": 0.0
+   },
+   "R@1000": {
+    "mean": 0.748064140821708,
+    "sd": 1.1102230246251565e-16
+   },
+   "chosen": {
+    "GPT-4|0|0.0": 100
+   }
+  },
+  "F1 GPT-4 + E1 (CV-K)": {
+   "nDCG@10": {
+    "mean": 0.5651811562449498,
+    "sd": 0.003306719429747742
+   },
+   "nDCG@20": {
+    "mean": 0.5328207972182443,
+    "sd": 0.0031875546134086147
+   },
+   "R@1000": {
+    "mean": 0.7563658558390489,
+    "sd": 0.003114064697151903
+   },
+   "chosen": {
+    "GPT-4|0|0.0": 24,
+    "GPT-4|1|0.0": 2,
+    "GPT-4|3|0.0": 25,
+    "GPT-4|5|0.0": 49
+   }
+  },
+  "F2 GPT-4, interpolated E2 (CV-alpha)": {
+   "nDCG@10": {
+    "mean": 0.5654393854396248,
+    "sd": 0.0026150727211091663
+   },
+   "nDCG@20": {
+    "mean": 0.5357961287887162,
+    "sd": 0.0012283645966338574
+   },
+   "R@1000": {
+    "mean": 0.7499087765359671,
+    "sd": 0.0010017580646592542
+   },
+   "chosen": {
+    "GPT-4|0|0.0": 54,
+    "GPT-4|0|0.25": 31,
+    "GPT-4|0|0.5": 1,
+    "GPT-4|0|0.75": 9,
+    "GPT-4|0|1.0": 5
+   }
+  },
+  "F1+F2 GPT-4 (CV-K x alpha)": {
+   "nDCG@10": {
+    "mean": 0.5632891388065109,
+    "sd": 0.004293568617189911
+   },
+   "nDCG@20": {
+    "mean": 0.5338985057782748,
+    "sd": 0.0037200009760075415
+   },
+   "R@1000": {
+    "mean": 0.7600389523029409,
+    "sd": 0.0033952676843788682
+   },
+   "chosen": {
+    "GPT-4|0|0.0": 10,
+    "GPT-4|0|0.25": 1,
+    "GPT-4|0|0.75": 1,
+    "GPT-4|0|1.0": 1,
+    "GPT-4|1|1.0": 1,
+    "GPT-4|3|0.0": 8,
+    "GPT-4|3|0.5": 3,
+    "GPT-4|3|0.75": 10,
+    "GPT-4|3|1.0": 17,
+    "GPT-4|5|0.0": 30,
+    "GPT-4|5|0.5": 1,
+    "GPT-4|5|0.75": 15,
+    "GPT-4|5|1.0": 2
+   }
+  },
+  "Mixtral (linked)": {
+   "nDCG@10": {
+    "mean": 0.5512205821722259,
+    "sd": 1.1102230246251565e-16
+   },
+   "nDCG@20": {
+    "mean": 0.5262205720059837,
+    "sd": 0.0
+   },
+   "R@1000": {
+    "mean": 0.7339380796088386,
+    "sd": 1.1102230246251565e-16
+   },
+   "chosen": {
+    "Mixtral|0|0.0": 100
+   }
+  },
+  "F1 Mixtral + E1 (CV-K)": {
+   "nDCG@10": {
+    "mean": 0.5552929062193732,
+    "sd": 0.006478713218453145
+   },
+   "nDCG@20": {
+    "mean": 0.5264441418671985,
+    "sd": 0.00475925572071888
+   },
+   "R@1000": {
+    "mean": 0.7487051927968423,
+    "sd": 0.004100820424205711
+   },
+   "chosen": {
+    "Mixtral|0|0.0": 11,
+    "Mixtral|3|0.0": 70,
+    "Mixtral|5|0.0": 16,
+    "Mixtral|10|0.0": 3
+   }
+  },
+  "F2 Mixtral, interpolated E2 (CV-alpha)": {
+   "nDCG@10": {
+    "mean": 0.5554413396145713,
+    "sd": 0.0026343344707743374
+   },
+   "nDCG@20": {
+    "mean": 0.5254585237176322,
+    "sd": 0.001827018041692507
+   },
+   "R@1000": {
+    "mean": 0.7374160303123419,
+    "sd": 0.0007925611698677736
+   },
+   "chosen": {
+    "Mixtral|0|0.0": 1,
+    "Mixtral|0|0.25": 21,
+    "Mixtral|0|0.5": 65,
+    "Mixtral|0|0.75": 12,
+    "Mixtral|0|1.0": 1
+   }
+  },
+  "F1+F2 Mixtral (CV-K x alpha)": {
+   "nDCG@10": {
+    "mean": 0.5531760996804931,
+    "sd": 0.003938575710140982
+   },
+   "nDCG@20": {
+    "mean": 0.5256858655652539,
+    "sd": 0.003857505022518708
+   },
+   "R@1000": {
+    "mean": 0.7489451008780489,
+    "sd": 0.00502350182401089
+   },
+   "chosen": {
+    "Mixtral|0|0.25": 5,
+    "Mixtral|0|0.5": 12,
+    "Mixtral|0|0.75": 2,
+    "Mixtral|1|0.5": 7,
+    "Mixtral|3|0.0": 11,
+    "Mixtral|3|0.25": 12,
+    "Mixtral|3|0.5": 11,
+    "Mixtral|3|0.75": 18,
+    "Mixtral|5|0.0": 1,
+    "Mixtral|5|0.25": 4,
+    "Mixtral|5|0.5": 14,
+    "Mixtral|5|0.75": 2,
+    "Mixtral|10|0.5": 1
+   }
+  }
+ },
+ "primary": {
+  "nDCG@10": {
+   "E1 alone (E1-occ v2, CV-K) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.0063663645365969876,
+    "p_rand": 0.5905,
+    "ci95": [
+     -0.016126795580803193,
+     0.02799017764291068
+    ],
+    "wins": 24,
+    "losses": 14,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 1.0
+   },
+   "E2 alone (REL, grounded v2 c=5) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.004778738441597488,
+    "p_rand": 0.3111,
+    "ci95": [
+     -0.004120846642491392,
+     0.013855184473328253
+    ],
+    "wins": 13,
+    "losses": 11,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 1.0
+   },
+   "F1 REL + E1 (CV-K) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.005902824757920078,
+    "p_rand": 0.6069,
+    "ci95": [
+     -0.016342473041259253,
+     0.027154769757246476
+    ],
+    "wins": 23,
+    "losses": 15,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 1.0
+   },
+   "F2 REL, interpolated E2 (CV-alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.002316207017673213,
+    "p_rand": 0.5309,
+    "ci95": [
+     -0.004855740013325857,
+     0.009777918059653364
+    ],
+    "wins": 14,
+    "losses": 9,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 1.0
+   },
+   "F1+F2 REL (CV-K x alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.003943585684796007,
+    "p_rand": 0.7368,
+    "ci95": [
+     -0.01866466285718828,
+     0.025517913352917216
+    ],
+    "wins": 22,
+    "losses": 17,
+    "n": 42,
+    "frac_splits_better": 0.98,
+    "p_holm": 1.0
+   }
+  },
+  "R@1000": {
+   "E1 alone (E1-occ v2, CV-K) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.028766825168546017,
+    "p_rand": 0.0006,
+    "ci95": [
+     0.013209351988991057,
+     0.04774709160356378
+    ],
+    "wins": 25,
+    "losses": 7,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.0024
+   },
+   "E2 alone (REL, grounded v2 c=5) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.0017700005765569256,
+    "p_rand": 0.3494,
+    "ci95": [
+     -0.001660549167651574,
+     0.005332574791505922
+    ],
+    "wins": 8,
+    "losses": 4,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.3494
+   },
+   "F1 REL + E1 (CV-K) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.02926285691457776,
+    "p_rand": 0.0006,
+    "ci95": [
+     0.013324469081159076,
+     0.04907229460351849
+    ],
+    "wins": 25,
+    "losses": 7,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.0024
+   },
+   "F2 REL, interpolated E2 (CV-alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.0019752420675233744,
+    "p_rand": 0.1263,
+    "ci95": [
+     -0.00029056457099270775,
+     0.004614737520914522
+    ],
+    "wins": 6,
+    "losses": 3,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.2526
+   },
+   "F1+F2 REL (CV-K x alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.029930637727509684,
+    "p_rand": 0.0004,
+    "ci95": [
+     0.013501820516513205,
+     0.049896389540052606
+    ],
+    "wins": 25,
+    "losses": 7,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.002
+   }
+  }
+ },
+ "secondary": {
+  "nDCG@10": {
+   "F1 GPT-4 + E1 (CV-K) vs GPT-4 (linked)": {
+    "mean_diff": -0.006223658044210043,
+    "p_rand": 0.4696,
+    "ci95": [
+     -0.022583695499302777,
+     0.008154327699103783
+    ],
+    "wins": 8,
+    "losses": 11,
+    "n": 42,
+    "frac_splits_better": 0.16,
+    "p_holm": 0.9392
+   },
+   "F2 GPT-4, interpolated E2 (CV-alpha) vs GPT-4 (linked)": {
+    "mean_diff": -0.004098392428629738,
+    "p_rand": 0.047,
+    "ci95": [
+     -0.008693358732719023,
+     -0.0005515019472462467
+    ],
+    "wins": 3,
+    "losses": 8,
+    "n": 42,
+    "frac_splits_better": 0.0,
+    "p_holm": 0.28200000000000003
+   },
+   "F1+F2 GPT-4 (CV-K x alpha) vs GPT-4 (linked)": {
+    "mean_diff": -0.0057061537617294515,
+    "p_rand": 0.569,
+    "ci95": [
+     -0.024822434030951978,
+     0.012977137761780297
+    ],
+    "wins": 19,
+    "losses": 20,
+    "n": 42,
+    "frac_splits_better": 0.08,
+    "p_holm": 0.9392
+   },
+   "F1 Mixtral + E1 (CV-K) vs Mixtral (linked)": {
+    "mean_diff": 0.009610474162189549,
+    "p_rand": 0.1778,
+    "ci95": [
+     -0.0033391871895385276,
+     0.023681708614151448
+    ],
+    "wins": 18,
+    "losses": 15,
+    "n": 42,
+    "frac_splits_better": 0.76,
+    "p_holm": 0.7112
+   },
+   "F2 Mixtral, interpolated E2 (CV-alpha) vs Mixtral (linked)": {
+    "mean_diff": 0.007022878145543575,
+    "p_rand": 0.0818,
+    "ci95": [
+     -0.00022995221752595172,
+     0.015446685905305624
+    ],
+    "wins": 13,
+    "losses": 10,
+    "n": 42,
+    "frac_splits_better": 0.92,
+    "p_holm": 0.409
+   },
+   "F1+F2 Mixtral (CV-K x alpha) vs Mixtral (linked)": {
+    "mean_diff": 0.008393395767895748,
+    "p_rand": 0.2446,
+    "ci95": [
+     -0.004853176045443168,
+     0.022625207315832646
+    ],
+    "wins": 19,
+    "losses": 19,
+    "n": 42,
+    "frac_splits_better": 0.76,
+    "p_holm": 0.7338
+   }
+  },
+  "R@1000": {
+   "F1 GPT-4 + E1 (CV-K) vs GPT-4 (linked)": {
+    "mean_diff": 0.004604921213365875,
+    "p_rand": 0.1261,
+    "ci95": [
+     -0.001006555978499061,
+     0.010493458854669891
+    ],
+    "wins": 11,
+    "losses": 5,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.1261
+   },
+   "F2 GPT-4, interpolated E2 (CV-alpha) vs GPT-4 (linked)": {
+    "mean_diff": 0.002267449071389945,
+    "p_rand": 0.0154,
+    "ci95": [
+     0.0005803430901233158,
+     0.004297773292544439
+    ],
+    "wins": 7,
+    "losses": 1,
+    "n": 42,
+    "frac_splits_better": 0.92,
+    "p_holm": 0.046200000000000005
+   },
+   "F1+F2 GPT-4 (CV-K x alpha) vs GPT-4 (linked)": {
+    "mean_diff": 0.013296481169194699,
+    "p_rand": 0.0017,
+    "ci95": [
+     0.005199836134774304,
+     0.02160913858672404
+    ],
+    "wins": 23,
+    "losses": 6,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.009000000000000001
+   },
+   "F1 Mixtral + E1 (CV-K) vs Mixtral (linked)": {
+    "mean_diff": 0.015421631746383647,
+    "p_rand": 0.0022,
+    "ci95": [
+     0.005730944096457182,
+     0.026917476519261924
+    ],
+    "wins": 21,
+    "losses": 6,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.009000000000000001
+   },
+   "F2 Mixtral, interpolated E2 (CV-alpha) vs Mixtral (linked)": {
+    "mean_diff": 0.0035230888080074753,
+    "p_rand": 0.026,
+    "ci95": [
+     0.0005626229102468734,
+     0.006756307673072496
+    ],
+    "wins": 10,
+    "losses": 3,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.052
+   },
+   "F1+F2 Mixtral (CV-K x alpha) vs Mixtral (linked)": {
+    "mean_diff": 0.016861455000755643,
+    "p_rand": 0.0015,
+    "ci95": [
+     0.006542568035268083,
+     0.028830989068582853
+    ],
+    "wins": 23,
+    "losses": 5,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.009000000000000001
+   }
+  }
+ },
+ "all_vs_dyvo_descriptive": {
+  "nDCG@10": {
+   "E1 alone (E1-occ v2, CV-K) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.0063663645365969876,
+    "p_rand": 0.5905,
+    "ci95": [
+     -0.016126795580803193,
+     0.02799017764291068
+    ],
+    "wins": 24,
+    "losses": 14,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 1.0
+   },
+   "E2 alone (REL, grounded v2 c=5) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.004778738441597488,
+    "p_rand": 0.3111,
+    "ci95": [
+     -0.004120846642491392,
+     0.013855184473328253
+    ],
+    "wins": 13,
+    "losses": 11,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 1.0
+   },
+   "F1 REL + E1 (CV-K) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.005902824757920078,
+    "p_rand": 0.6069,
+    "ci95": [
+     -0.016342473041259253,
+     0.027154769757246476
+    ],
+    "wins": 23,
+    "losses": 15,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 1.0
+   },
+   "F2 REL, interpolated E2 (CV-alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.002316207017673213,
+    "p_rand": 0.5309,
+    "ci95": [
+     -0.004855740013325857,
+     0.009777918059653364
+    ],
+    "wins": 14,
+    "losses": 9,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 1.0
+   },
+   "F1+F2 REL (CV-K x alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.003943585684796007,
+    "p_rand": 0.7368,
+    "ci95": [
+     -0.01866466285718828,
+     0.025517913352917216
+    ],
+    "wins": 22,
+    "losses": 17,
+    "n": 42,
+    "frac_splits_better": 0.98,
+    "p_holm": 1.0
+   },
+   "GPT-4 (linked) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.0321104199552012,
+    "p_rand": 0.007,
+    "ci95": [
+     0.010755331135962014,
+     0.055641203568006
+    ],
+    "wins": 26,
+    "losses": 14,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.091
+   },
+   "F1 GPT-4 + E1 (CV-K) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.025886761910991162,
+    "p_rand": 0.0414,
+    "ci95": [
+     0.002627374440693658,
+     0.05024862425691889
+    ],
+    "wins": 26,
+    "losses": 15,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.3393
+   },
+   "F2 GPT-4, interpolated E2 (CV-alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.028012027526571455,
+    "p_rand": 0.0173,
+    "ci95": [
+     0.006905346908861869,
+     0.05063846455070509
+    ],
+    "wins": 25,
+    "losses": 15,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.173
+   },
+   "F1+F2 GPT-4 (CV-K x alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.026404266193471755,
+    "p_rand": 0.0377,
+    "ci95": [
+     0.0024418630951334648,
+     0.04965146590552246
+    ],
+    "wins": 28,
+    "losses": 13,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.3393
+   },
+   "Mixtral (linked) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.014570085028507715,
+    "p_rand": 0.1639,
+    "ci95": [
+     -0.005413825750483348,
+     0.03398931557846807
+    ],
+    "wins": 24,
+    "losses": 15,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.9833999999999999
+   },
+   "F1 Mixtral + E1 (CV-K) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.02418055919069726,
+    "p_rand": 0.0081,
+    "ci95": [
+     0.006785600342030657,
+     0.04085773628050854
+    ],
+    "wins": 32,
+    "losses": 9,
+    "n": 42,
+    "frac_splits_better": 0.96,
+    "p_holm": 0.0972
+   },
+   "F2 Mixtral, interpolated E2 (CV-alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.021592963174051287,
+    "p_rand": 0.0402,
+    "ci95": [
+     0.0020220747917117352,
+     0.04099526501705977
+    ],
+    "wins": 25,
+    "losses": 15,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.3393
+   },
+   "F1+F2 Mixtral (CV-K x alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.022963480796403462,
+    "p_rand": 0.013,
+    "ci95": [
+     0.005223449781740739,
+     0.03989369727615879
+    ],
+    "wins": 31,
+    "losses": 10,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.143
+   }
+  },
+  "R@1000": {
+   "E1 alone (E1-occ v2, CV-K) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.028766825168546017,
+    "p_rand": 0.0006,
+    "ci95": [
+     0.013209351988991057,
+     0.04774709160356378
+    ],
+    "wins": 25,
+    "losses": 7,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.0024000000000000002
+   },
+   "E2 alone (REL, grounded v2 c=5) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.0017700005765569256,
+    "p_rand": 0.3494,
+    "ci95": [
+     -0.001660549167651574,
+     0.005332574791505922
+    ],
+    "wins": 8,
+    "losses": 4,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.3494
+   },
+   "F1 REL + E1 (CV-K) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.02926285691457776,
+    "p_rand": 0.0006,
+    "ci95": [
+     0.013324469081159076,
+     0.04907229460351849
+    ],
+    "wins": 25,
+    "losses": 7,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.0024000000000000002
+   },
+   "F2 REL, interpolated E2 (CV-alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.0019752420675233744,
+    "p_rand": 0.1263,
+    "ci95": [
+     -0.00029056457099270775,
+     0.004614737520914522
+    ],
+    "wins": 6,
+    "losses": 3,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.2526
+   },
+   "F1+F2 REL (CV-K x alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.029930637727509684,
+    "p_rand": 0.0004,
+    "ci95": [
+     0.013501820516513205,
+     0.049896389540052606
+    ],
+    "wins": 25,
+    "losses": 7,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.0024000000000000002
+   },
+   "GPT-4 (linked) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.03990602559228272,
+    "p_rand": 0.0,
+    "ci95": [
+     0.021190690707124312,
+     0.06253794214038057
+    ],
+    "wins": 30,
+    "losses": 4,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.0
+   },
+   "F1 GPT-4 + E1 (CV-K) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.044510946805648585,
+    "p_rand": 0.0,
+    "ci95": [
+     0.024657183305839065,
+     0.06793804245898422
+    ],
+    "wins": 30,
+    "losses": 4,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.0
+   },
+   "F2 GPT-4, interpolated E2 (CV-alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.04217347466367267,
+    "p_rand": 0.0,
+    "ci95": [
+     0.023305462294260323,
+     0.06502310688870176
+    ],
+    "wins": 31,
+    "losses": 4,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.0
+   },
+   "F1+F2 GPT-4 (CV-K x alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.05320250676147742,
+    "p_rand": 0.0,
+    "ci95": [
+     0.03212735428713321,
+     0.07843093557532853
+    ],
+    "wins": 31,
+    "losses": 4,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.0
+   },
+   "Mixtral (linked) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.02577996437941337,
+    "p_rand": 0.0004,
+    "ci95": [
+     0.011502680498221835,
+     0.044184959195127896
+    ],
+    "wins": 25,
+    "losses": 4,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.0024000000000000002
+   },
+   "F1 Mixtral + E1 (CV-K) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.041201596125797026,
+    "p_rand": 0.0,
+    "ci95": [
+     0.023969143816502315,
+     0.06185145032584385
+    ],
+    "wins": 31,
+    "losses": 4,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.0
+   },
+   "F2 Mixtral, interpolated E2 (CV-alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.029303053187420842,
+    "p_rand": 0.0001,
+    "ci95": [
+     0.01508430077016872,
+     0.04738328294413473
+    ],
+    "wins": 28,
+    "losses": 4,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.0007
+   },
+   "F1+F2 Mixtral (CV-K x alpha) vs DyVo baseline (REL, linked)": {
+    "mean_diff": 0.04264141938016901,
+    "p_rand": 0.0,
+    "ci95": [
+     0.025112206840573838,
+     0.06353198270059728
+    ],
+    "wins": 31,
+    "losses": 4,
+    "n": 42,
+    "frac_splits_better": 1.0,
+    "p_holm": 0.0
+   }
+  }
+ }
+}

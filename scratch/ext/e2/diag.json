@@ -1,0 +1,50 @@
+{
+ "train REL vs positive": {
+  "pairs": 8496,
+  "linked": 0.9072504708097928,
+  "missing_but_mentioned": 0.024364406779661018,
+  "absent": 0.06838512241054615
+ },
+ "train LaQue-top5 vs positive": {
+  "pairs": 45000,
+  "linked": 0.09237777777777778,
+  "missing_but_mentioned": 0.0544,
+  "absent": 0.8532222222222222
+ },
+ "test rel vs relevant (rel>=1)": {
+  "pairs": 17768,
+  "linked": 0.12522512381809994,
+  "missing_but_mentioned": 0.05380459252588924,
+  "absent": 0.8209702836560108
+ },
+ "test rel vs non-relevant (rel=0)": {
+  "pairs": 10483,
+  "linked": 0.10340551368882954,
+  "missing_but_mentioned": 0.03672612801678909,
+  "absent": 0.8598683582943814
+ },
+ "test gpt4 vs relevant (rel>=1)": {
+  "pairs": 54431,
+  "linked": 0.13795447447226764,
+  "missing_but_mentioned": 0.04578273410372766,
+  "absent": 0.8162627914240047
+ },
+ "test gpt4 vs non-relevant (rel=0)": {
+  "pairs": 32062,
+  "linked": 0.08380637514815045,
+  "missing_but_mentioned": 0.024015969059946355,
+  "absent": 0.8921776557919032
+ },
+ "test mistral vs relevant (rel>=1)": {
+  "pairs": 40960,
+  "linked": 0.1463134765625,
+  "missing_but_mentioned": 0.051513671875,
+  "absent": 0.8021728515625
+ },
+ "test mistral vs non-relevant (rel=0)": {
+  "pairs": 24038,
+  "linked": 0.10138114651801315,
+  "missing_but_mentioned": 0.03049338547300108,
+  "absent": 0.8681254680089858
+ }
+}

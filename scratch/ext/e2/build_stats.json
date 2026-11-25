@@ -1,0 +1,18 @@
+{
+ "cap_per_doc": 5,
+ "available": {
+  "alias": 3575930,
+  "unfiltered": 3648685,
+  "grounded": 3575930
+ },
+ "budget_B": 3575930,
+ "alias_docs_touched": 728245,
+ "unfiltered_docs_touched": 729737,
+ "grounded_docs_touched": 728245,
+ "mention_pairs": 20935353,
+ "mention_pairs_already_linked": 5427855,
+ "dense_pairs_already_linked": 109031,
+ "dense_pairs_with_evidence": 163071,
+ "linked_pairs": 12932919,
+ "union_pairs": 22429666
+}

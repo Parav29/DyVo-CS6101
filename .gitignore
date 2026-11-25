@@ -12,3 +12,22 @@ logs/*.log
 results/
 .DS_Store
 DyVo/dyvo_data/.cache/
+
+# large artefacts: never commit (code, docs and small result summaries only)
+.venv*/
+scratch/outputs/
+scratch/fast_eval/
+scratch/ext/index_*/
+scratch/ext/e1/*.npz
+scratch/ext/e1/*.npy
+scratch/ext/e1/*.jsonl
+scratch/ext/e1/results*/*.pt
+scratch/ext/e1/results*/*.pkl
+scratch/ext/e1/results*/queries_*.jsonl
+scratch/ext/e2/*.jsonl
+scratch/ext/e2/*.npz
+scratch/ext/e2/*.npy
+scratch/ext/e2/wiki/
+scratch/ext/_tiny/
+scratch/ext/**/*.pkl
+DyVo/dyvo_data/

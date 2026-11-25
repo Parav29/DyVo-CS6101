@@ -36,7 +36,9 @@ def train(conf: DictConfig):
     test_dataset = instantiate(conf.test_dataset)
     trainer.train(conf.resume_from_checkpoint)
     trainer.save_model()
-    trainer.predict(test_dataset)
+    # DYVO-REPRO: LSR_SKIP_PREDICT=1 leaves testing to scripts/big_pc/fast_eval.py (same scoring, ~10x faster)
+    if not os.environ.get("LSR_SKIP_PREDICT"):
+        trainer.predict(test_dataset)
     wandb.finish()
 
 

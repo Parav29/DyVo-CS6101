@@ -1,0 +1,11 @@
+[03_train 05:22:37] qmlp_dmlm_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_course20k exited with 0
+[run_codec_course 2026-09-29 05:22:37] qmlp_dmlm_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_course20k exited with 0
+[03_train 06:20:41] qmlp_dmlm_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_init exited with 0
+[run_codec_course 2026-09-29 06:20:41] qmlp_dmlm_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_init exited with 0
+[03_train 07:42:24] qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05_course20k exited with 1
+[run_codec_course 2026-09-29 07:42:24] qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05_course20k exited with 1
+[03_train 08:02:03] qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05_init exited with 1
+[run_codec_course 2026-09-29 08:02:03] qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05_init exited with 1
+[run_codec_course 2026-09-29 08:02:04] all done
+[run_codec_fix 2026-09-29 14:20:09] final -> /home/24b4515/Dyvo_cs6101/DyVo/outputs/qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05_course20k/09-29-2026
+[run_codec_fix 2026-09-29 17:23:26] final -> /home/24b4515/Dyvo_cs6101/DyVo/outputs/qmlp_dmlm_emlm_laque_codec_msmarco_pretrained_inparsv2_monot53b_distillation_l1_0.0_0.00001_entw_0.05_course20k/09-29-2026

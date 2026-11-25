@@ -1,0 +1,38 @@
+{
+ "judge": "Claude (same agent, blinded to variant)",
+ "items_judged": 45,
+ "per_variant": {
+  "alias": {
+   "judged_correct": 6,
+   "n": 16,
+   "precision": 0.375
+  },
+  "grounded": {
+   "judged_correct": 6,
+   "n": 16,
+   "precision": 0.375
+  },
+  "unfiltered": {
+   "judged_correct": 3,
+   "n": 13,
+   "precision": 0.23076923076923078
+  }
+ },
+ "correct_items": [
+  0,
+  3,
+  4,
+  9,
+  17,
+  21,
+  22,
+  24,
+  26,
+  29,
+  38,
+  40,
+  41,
+  42,
+  44
+ ]
+}

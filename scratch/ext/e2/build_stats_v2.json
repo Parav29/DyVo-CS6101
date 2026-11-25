@@ -1,0 +1,19 @@
+{
+ "cap_per_doc": 5,
+ "available": {
+  "alias": 1940031,
+  "unfiltered": 3648685,
+  "grounded": 1940031
+ },
+ "budget_B": 1940031,
+ "alias_docs_touched": 648865,
+ "unfiltered_docs_touched": 729737,
+ "grounded_docs_touched": 648865,
+ "delta_pairs_to_encode": 1282339,
+ "mention_pairs": 14408029,
+ "mention_pairs_already_linked": 5043843,
+ "dense_pairs_already_linked": 109031,
+ "dense_pairs_with_evidence": 99628,
+ "linked_pairs": 12932919,
+ "union_pairs": 16921596
+}
