@@ -1,7 +1,7 @@
 # Extension 2: evidence-grounded document entity repair
 
 **Status:** complete (23–25 Nov 2026). v1 = pre-registered design, v2 = exploratory follow-up; conclusions in §8.
-Plan sources: `EXTENSIONS.md` §Extension 2, `DyVo-final-extension-plan.md` (E2), `DyVo-research-council-report.md` §9B, §11.
+Plan source: `EXTENSIONS.md` §Extension 2. (The council report and detailed plan cited below were internal planning notes, not included here.)
 
 ## 1. What we are testing
 
@@ -167,7 +167,7 @@ Unsupported-addition rate (added entity not explicitly mentioned in the visible 
 - **Alias-only repair** is the most useful document variant for the strongest query side (GPT-4 57.48, +0.60; R@1000 +0.63), but it hurts REL at larger budgets.
 
 ### 7.2 Why: blinded review of what was added
-We sampled 40 random additions per variant (`results/review_sample_blinded.jsonl`) and judged the first 45 shuffled items with the variant hidden; the key is in `review_sample_key.jsonl`. A judgment counts as correct if the entity is the right sense and is supported or clearly relevant. The judge is Claude itself, blinded but **not independent**: one pass, no second rater.
+We sampled 40 random additions per variant (sample files not included) and judged the first 45 shuffled items with the variant hidden; judgments are in `results/review_judgements.json`. A judgment counts as correct if the entity is the right sense and is supported or clearly relevant. The judge is Claude itself, blinded but **not independent**: one pass, no second rater.
 
 | Variant | Judged correct | Precision |
 |---|---:|---:|
@@ -234,7 +234,7 @@ Mechanism diagnostics (positive entity-ID matches per judged document, relevant 
 
 Budget B = 1,940,031 added candidates (1,909,504 positive grounded postings). Unsupported-addition rate: alias 0%, grounded 0%, unfiltered 95.4%.
 
-Blinded review of v2 (same protocol as §7.2: first 45 shuffled items of `results_v2/review_sample_blinded.jsonl`, variant hidden, unblinded afterwards; `results_v2/review_judgements.json`). This review was done on 25 Nov in a new session after the 23 Nov session was cut off, and the judge saw only the stored first ~1,500 characters of each document:
+Blinded review of v2 (same protocol as §7.2: first 45 shuffled items of the blinded sample, not included, variant hidden, unblinded afterwards; `results_v2/review_judgements.json`). This review was done on 25 Nov in a new session after the 23 Nov session was cut off, and the judge saw only the stored first ~1,500 characters of each document:
 
 | Variant | v1 precision | v2 judged correct | v2 precision |
 |---|---:|---:|---:|

@@ -1,7 +1,7 @@
 # Extension 1: utility-trained query entity selection
 
 **Status:** complete (23–25 Nov 2026). Conclusions in §8.
-Plan sources: `EXTENSIONS.md` §Extension 1, `DyVo-final-extension-plan.md` (E1), `DyVo-research-council-report.md` §9A, §11.
+Plan source: `EXTENSIONS.md` §Extension 1. (The council report and detailed plan cited below were internal planning notes, not included here.)
 
 ## 1. What we are testing
 

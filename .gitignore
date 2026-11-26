@@ -31,3 +31,15 @@ scratch/ext/e2/wiki/
 scratch/ext/_tiny/
 scratch/ext/**/*.pkl
 DyVo/dyvo_data/
+
+# runtime junk
+logs/*.timing
+logs/*.pid
+logs/.watch_seen
+logs/report_loop.last
+logs/requirements-gpu.txt
+DyVo/smoke_assets/
+DyVo/smoke_data/
+DyVo/smoke_outputs/
+DyVo/wandb/
+scratch/ext/followup/*.pkl

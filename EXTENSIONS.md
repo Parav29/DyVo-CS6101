@@ -400,7 +400,4 @@ DyVo adds dynamic entity coordinates to a learned sparse retriever, but a useful
 
 - Nguyen et al., **DyVo: Dynamic Vocabularies for Learned Sparse Retrieval with Entities**, EMNLP 2024: <https://aclanthology.org/2024.emnlp-main.45/>
 - Official DyVo implementation: <https://github.com/thongnt99/DyVo>
-- Detailed extension plan: [`research/DyVo-final-extension-plan.md`](research/DyVo-final-extension-plan.md)
-- Full research-council report: [`research/DyVo-research-council-report.md`](research/DyVo-research-council-report.md)
-- Professor-provided project paper: [`cs6101_DyVo.pdf`](cs6101_DyVo.pdf)
 

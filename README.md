@@ -1,25 +1,24 @@
 # DyVo (CS6101): reproduction + two extensions
 
-Course project. We reproduced **DyVo** ("Dynamic Vocabularies for Learned Sparse Retrieval with Entities", EMNLP 2024; paper: `cs6101_DyVo.pdf`) on the CODEC collection, then built and tested two extensions on top of the frozen reproduced model.
+Course project. We reproduced **DyVo** ("Dynamic Vocabularies for Learned Sparse Retrieval with Entities", EMNLP 2024; [paper](https://aclanthology.org/2024.emnlp-main.45/)) on the CODEC collection, then built and tested two extensions on top of the frozen reproduced model.
 
 **This repository holds code, write-ups and small result summaries only.** Data, model checkpoints, the Python environment and large indexes (tens of GB) are deliberately not included; they are listed in `.gitignore`.
 
 ## Read in this order
 | # | File | What you learn |
 |---|---|---|
-| 1 | `project_context.md` | What DyVo is, what we reproduced, hardware, data layout |
-| 2 | `repro_codec/REPORT.md`, `repro_codec/MIDTERM.md`, `final_submission.md` | Reproduction results vs the paper (CODEC nDCG@10 etc.), deviations |
-| 3 | `EXTENSIONS.md` (+ `DyVo-final-extension-plan.md`, `DyVo-research-council-report.md`) | The plan: Extension 1 (query entity selection) and Extension 2 (document entity repair) |
-| 4 | `extension1.md` | E1: method, assumptions, challenges, all results (§7), conclusions (§8) |
-| 5 | `extension2.md` | E2: method, results (§7.1 v1, §7.3 v2), blinded review, conclusions (§8) |
-| 6 | **`result.md`** | **Extensions vs baseline DyVo, with significance tests: the main results table** |
-| 7 | `scratch/ext/followup_design.md` | Follow-up experiment design, written before the runs were executed |
+| 1 | `REPORT.md` | Reproduction: method, setup, results vs the paper, deviations |
+| 2 | `EXTENSIONS.md` | Extension proposals: query entity selection (E1) and document entity repair (E2) |
+| 3 | `extension1.md` | E1: method, results (§7), conclusions (§8) |
+| 4 | `extension2.md` | E2: method, results (§7), blinded review, conclusions (§8) |
+| 5 | **`result.md`** | **Extensions vs baseline DyVo, with significance tests: the main results table** |
+
+Result files are in `scratch/ext/` (test metrics, cross-validation, review judgements; follow-up design in `followup_design.md`).
 
 ## Code map
 - `DyVo/` – the authors' code with our fixes (marked `DYVO-REPRO`).
-- `scripts/big_pc/` – reproduction: training supervisors, fast evaluator (`fast_eval.py`), report generation.
+- `scripts/big_pc/` – reproduction: training supervisors, fast evaluator (`fast_eval.py`), data setup and checks.
 - `scripts/ext/` – extensions: `common.py` (model, exact scoring, statistics), `dump_index.py`; E1: `e1_pool.py`, `e1_prf.py`, `e1_labels.py`, `e1_run.py`, `e1_cvk.py`, `e1_latency.py`; E2: `e2_alias.py`, `e2_mentions.py`, `e2_dense.py`, `e2_build.py`, `e2_make_index.py`, `e2_run.py`, `e2_diag.py`; follow-ups: `f_followups.py`; pipeline: `run_after_delta.sh`.
-- `scratch/ext/**.json` – small result summaries (per-method test metrics, CV results, review judgements).
 
 ## Headline results (CODEC, 42 test queries; details and caveats in `result.md`)
 | System | nDCG@10 | R@1000 |

@@ -1,10 +1,8 @@
 # DyVo reproduction on CODEC: full project report (CS6101)
 
-Paper: *DyVo: Dynamic Vocabularies for Learned Sparse Retrieval with Entities* (Nguyen et al., EMNLP 2024), `cs6101_DyVo.pdf`.
+Paper: *DyVo: Dynamic Vocabularies for Learned Sparse Retrieval with Entities* (Nguyen et al., EMNLP 2024).
 Code: the authors' repository `thongnt99/DyVo` in `DyVo/`, edited only where needed (every edit is marked `# DYVO-REPRO`).
 Status as of 1 Oct 2026: **all planned runs finished**. Midterm deadline: 3 Oct 2026.
-
-Auto-generated detail (exact commands, timings, per-run health) lives in `repro_codec/REPORT.md`; this file is the narrative report.
 
 ---
 
@@ -24,7 +22,7 @@ We reproduced the CODEC rows of the paper's Tables 1 and 2 (L1 = 1e-5): the word
 
 Test set: 42 CODEC topics, full 729,824-document corpus, top 10,000 retrieved per query, metrics from `ir_measures`.
 
-Scope: **CODEC only.** Robust04 and TREC Core 2018 were skipped (licences), and no extensions were implemented. See sections 5 and 6.
+Scope: **CODEC only.** Robust04 and TREC Core 2018 were skipped (licences), and the extensions came later (see `result.md`). See sections 5 and 6.
 
 ---
 
@@ -92,9 +90,9 @@ Six bugs that stopped any run from starting, the LLM-candidate rows, budget conf
 ## 4. Everything done over the project
 
 ### 4.1 Build phase (before any real compute)
-Built and checked on a low-resource laptop (CPU only, no downloads of weights or data), as a loop of small verified tasks tracked in `PROGRESS.md`, `NOTES.md` and `ERRORS.md`.
+Built and checked on a low-resource laptop (CPU only, no downloads of weights or data), as a loop of small verified tasks.
 - **Offline verification gate** `scripts/verify.sh`: network blocked, 61 unit tests, a one-batch overfit test, and end-to-end smoke runs of the real training entry point with tiny random models. Result: `VERIFY PASSED`.
-- **Six upstream bugs found and fixed** (details in `SANITY_REPORT.md`, `ERRORS.md`):
+- **Six upstream bugs found and fixed**:
   1. `lsr/losses/__init__.py` imported three deleted modules, so no config could train from a fresh clone.
   2. `TransformerMLPeMLMConfig` never stored `entity_cls`, so the DyVo query encoder raised `AttributeError`.
   3. Eleven configs referenced a missing `dataset/trec_robust04_fold1`.
@@ -102,7 +100,6 @@ Built and checked on a low-resource laptop (CPU only, no downloads of weights or
   5. Evaluation wrote to the authors' cluster path `/scratch-shared/$USER`; it now honours `LSR_SCRATCH_DIR`.
   6. `wandb.Settings(start_method=...)` failed on current wandb; pinned wandb 0.16.6.
 - **Config checks:** 73 configs compose (43 official, 28 new for Tables 2 and 3, 2 smoke); 53 DyVo configs have matching entity widths.
-- **Traceability:** `TRACEABILITY.md` maps the paper's sections and equations to code.
 - **Big-PC scripts** for setup, data download, data checks, training, result collection and LLM entity generation, all dry-run tested.
 - **Collapse probe** (paper App. A.2) at toy scale: the collapse did not reproduce, which is weak evidence only. We watched entity counts in the real runs instead.
 
@@ -113,7 +110,7 @@ Built and checked on a low-resource laptop (CPU only, no downloads of weights or
 | `scripts/big_pc/00_setup_env.sh` | `.venv-gpu`: torch 2.2.2+cu121, transformers 4.40.2, CUDA visible |
 | `scripts/verify.sh` | `VERIFY PASSED` |
 
-The lock file is installed with `--no-deps` because it pins protobuf versions pip rejects (ERRORS E5).
+The lock file is installed with `--no-deps` because it pins protobuf versions pip rejects.
 
 ### 4.3 Phase 2: data
 - Authors' data downloaded to `DyVo/dyvo_data/` (about 17 GB for CODEC plus LaQue).
@@ -153,7 +150,7 @@ Correctness checks:
 
 ### 4.7 Operational tooling built
 - `supervise_train.sh`: restarts from the newest checkpoint, picks the GPU with the most free memory and the largest batch that fits (keeping effective batch 16), and runs the fast evaluator when training ends.
-- `watch_events.sh`, `report_loop.sh`, `codec_report.py`, `codec_snapshot.sh`, `finalize_midterm.sh`: monitoring, report regeneration and snapshotting.
+- Monitoring and report-regeneration helpers (not included here).
 - Memory-mapped shared entity table (`lsr/models/entity_emb.py`).
 
 ---
@@ -275,12 +272,7 @@ The 20k rows are 0.2 to 0.7 points below the paper on nDCG@10, as expected for o
 
 | What | Where |
 |---|---|
-| This report | `REPORT.md` |
-| Auto-generated results and exact commands per run | `repro_codec/REPORT.md` |
-| Midterm write-up | `repro_codec/MIDTERM.md` |
-| Per-run scores and rankings | `DyVo/outputs/<experiment>/fasteval/{test_run.trec,test_result.json}` |
-| Training logs | `logs/<experiment>.log`, `logs/supervise_<experiment>.log` |
-| Resolved configs and environment snapshot | `repro_codec/resolved_configs/`, `repro_codec/env/` |
-| Scripts | `scripts/big_pc/` (`fast_eval.py`, `supervise_train.sh`, `codec_report.py`, ...) |
-| Bugs, deviations, traceability, sanity checks | `ERRORS.md`, `NOTES.md`, `TRACEABILITY.md`, `SANITY_REPORT.md` |
-| Handoff and context | `handoff.md`, `BIG_PC_HANDOFF.md`, `project_context.md` |
+| Per-run scores, rankings and training logs | kept on the training machine, not in the repository |
+| Experiment configs | `DyVo/lsr/configs/experiment/` |
+| Scripts | `scripts/big_pc/` (`fast_eval.py`, `supervise_train.sh`, ...) |
+| Extensions and their results | `EXTENSIONS.md`, `result.md` |

@@ -1,7 +1,0 @@
-upstream: https://github.com/thongnt99/DyVo
-commit 3dc0c3568cef521f2f28c6cbc94f233cb18a07d2 (Thu Oct 1 19:48:01 2026 +0530)
-local modifications (git status --short):
- M ../repro_codec/MIDTERM.md
- M ../repro_codec/REPORT.md
- M ../repro_codec/env/code_revision.txt
- M ../scratch/fast_eval/0498a42adb67160f/scores.pt
